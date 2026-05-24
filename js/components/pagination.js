@@ -2,7 +2,7 @@ import { getBtnEl, getLiEl } from './domHelpers.js';
 import ProductCard from './ProductCard.js';
 
 // Функция рендера карточек на текущей странице
-function renderPage(page, products, container, itemsPerPage, basket) {
+function renderPage(page, products, container, itemsPerPage, onAddToBasket) {
   container.innerHTML = '';
 
   const start = (page - 1) * itemsPerPage;
@@ -10,7 +10,7 @@ function renderPage(page, products, container, itemsPerPage, basket) {
   const visible = products.slice(start, end);
 
   visible.forEach((product) => {
-    const card = new ProductCard(product, basket);
+    const card = new ProductCard(product, onAddToBasket);
     container.appendChild(card.renderCard());
   });
 }
@@ -21,7 +21,7 @@ function renderPagination(
   pagination,
   currentPage,
   itemsPerPage,
-  basket,
+  onAddToBasket,
   updatePagination
 ) {
   pagination.innerHTML = '';
@@ -55,14 +55,14 @@ function renderPagination(
         products,
         document.querySelector('.catalog__list'),
         itemsPerPage,
-        basket
+        onAddToBasket
       );
       renderPagination(
         products,
         pagination,
         currentPage,
         itemsPerPage,
-        basket,
+        onAddToBasket,
         updatePagination
       );
     });
@@ -77,32 +77,32 @@ export function setupPagination(
   products,
   containerSelector,
   paginationSelector,
-  basket,
+  onAddToBasket,
   itemsPerPage = 6
 ) {
   const container = document.querySelector(containerSelector);
   const pagination = document.querySelector(paginationSelector);
   let currentPage = 1;
 
-  renderPage(currentPage, products, container, itemsPerPage, basket);
+  renderPage(currentPage, products, container, itemsPerPage, onAddToBasket);
   renderPagination(
     products,
     pagination,
     currentPage,
     itemsPerPage,
-    basket,
+    onAddToBasket,
     updatePagination
   );
 
   // Функция для обновления пагинации с новыми данными
   function updatePagination(newProducts) {
-    renderPage(currentPage, newProducts, container, itemsPerPage, basket);
+    renderPage(currentPage, newProducts, container, itemsPerPage, onAddToBasket);
     renderPagination(
       newProducts,
       pagination,
       currentPage,
       itemsPerPage,
-      basket,
+      onAddToBasket,
       updatePagination
     );
   }

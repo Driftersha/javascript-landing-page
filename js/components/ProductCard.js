@@ -17,9 +17,9 @@ const MORE_DETAILS_TEXT = 'Подробнее';
 const TOOLTIP_TEXT = 'Наличие товара по городам:';
 
 export default class ProductCard {
-  constructor(product, basket) {
+  constructor(product, onAddToBasket) {
     this.product = product;
-    this.basket = basket;
+    this.onAddToBasket = onAddToBasket;
   }
 
   renderCard() {
@@ -129,12 +129,10 @@ export default class ProductCard {
   }
 
   addToBasket() {
-    if (this.basket && typeof this.basket.addItem === 'function') {
-      this.basket.addItem(this.product);
+    if (typeof this.onAddToBasket === 'function') {
+      this.onAddToBasket(this.product);
     } else {
-      console.error(
-        'Корзина не инициализирована или метод addItem отсутствует'
-      );
+      console.error('Обработчик добавления в корзину не передан');
     }
   }
 }
