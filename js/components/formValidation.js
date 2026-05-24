@@ -3,6 +3,8 @@ import { showModal } from './modal.js';
 export function initFormValidation() {
   const form = document.querySelector('.questions__form');
 
+  if (!form) return;
+
   const validation = new JustValidate(form);
 
   // Настраиваем правила валидации для каждого поля
@@ -77,6 +79,51 @@ export function initFormValidation() {
           message:
             'Что-то пошло не так, попробуйте отправить форму ещё раз. Если ошибка повторится — свяжитесь со службой поддержки.',
         });
+      }
+    });
+}
+
+export function initCheckoutValidation(basket) {
+  const form = document.querySelector('.checkout-form');
+
+  if (!form) return;
+
+  const validation = new JustValidate(form);
+
+  validation
+    .addField('#checkout-name', [
+      { rule: 'required', errorMessage: 'Введите ваше имя' },
+      {
+        rule: 'minLength',
+        value: 3,
+        errorMessage: 'Минимальная длина три символа',
+      },
+    ])
+    .addField('#checkout-phone', [
+      { rule: 'required', errorMessage: 'Введите номер телефона' },
+    ])
+    .addField('#checkout-address', [
+      { rule: 'required', errorMessage: 'Введите адрес доставки' },
+    ])
+    .addField('#checkout-agree', [
+      { rule: 'required', errorMessage: 'Согласие обязательно' },
+    ])
+    .onSuccess((event) => {
+      event.preventDefault();
+
+      showModal({
+        iconId: 'icon-completed',
+        title: 'Заказ оформлен',
+        message:
+          'Ваш заказ успешно оформлен. Мы свяжемся с вами в ближайшее время.',
+      });
+
+      form.reset();
+
+      if (basket && typeof basket.clear === 'function') {
+        basket.clear();
+      } else {
+        localStorage.removeItem('basketItems');
       }
     });
 }
