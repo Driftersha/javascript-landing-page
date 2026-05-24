@@ -1,4 +1,5 @@
 import { showModal } from './modal.js';
+import { clearBasketItems } from '../services/basketStorage.js';
 
 export function initFormValidation() {
   const form = document.querySelector('.questions__form');
@@ -123,7 +124,7 @@ export function initCheckoutValidation(basket) {
       if (basket && typeof basket.clear === 'function') {
         basket.clear();
       } else {
-        localStorage.removeItem('basketItems');
+        clearBasketItems();
       }
     });
 }

@@ -9,7 +9,8 @@ import {
 } from './domHelpers.js';
 
 export default class Basket {
-  constructor() {
+  constructor(basketService) {
+    this.basketService = basketService;
     this.basketList =
       document.querySelector('.basket__list') ?? document.createElement('ul');
     this.basketCounter = document.querySelector('.header__user-count');
@@ -37,52 +38,15 @@ export default class Basket {
     }
   }
 
-  // Геттер для получения товаров из localStorage
-  get items() {
-    const data = localStorage.getItem('basketItems');
-    try {
-      return data ? JSON.parse(data) : [];
-    } catch (e) {
-      console.warn('Ошибка при чтении корзины:', e);
-      return [];
-    }
-  }
-
-  // Сеттер для сохранения товаров в localStorage
-  set items(value) {
-    localStorage.setItem('basketItems', JSON.stringify(value));
-  }
-
   // Добавление товара в корзину
   addItem(product) {
-    const items = this.items;
-    const existingItem = items.find((item) => item.id === product.id);
-
-    if (existingItem) {
-      existingItem.quantity += 1;
-    } else {
-      items.push({ ...product, quantity: 1 });
-    }
-
-    this.items = items;
+    this.basketService.addItem(product);
     this.updateAll();
   }
 
   // Удаление товара из корзины
   removeItem(productId) {
-    const items = this.items;
-    const index = items.findIndex((item) => item.id === productId);
-
-    if (index === -1) return;
-
-    if (items[index].quantity > 1) {
-      items[index].quantity -= 1;
-    } else {
-      items.splice(index, 1);
-    }
-
-    this.items = items;
-
+    this.basketService.removeItem(productId);
     this.updateAll();
   }
 
@@ -131,7 +95,7 @@ export default class Basket {
 
     container.innerHTML = '';
 
-    this.items.forEach((product) => {
+    this.getItems().forEach((product) => {
       container.append(this.createBasketItem(product));
     });
   }
@@ -142,11 +106,7 @@ export default class Basket {
 
     if (!totalElement) return;
 
-    const total = this.items.reduce((sum, product) => {
-      return sum + product.price.new * product.quantity;
-    }, 0);
-
-    totalElement.textContent = `${total} руб`;
+    totalElement.textContent = `${this.basketService.getTotalPrice()} руб`;
   }
 
   renderCheckoutState() {
@@ -159,7 +119,7 @@ export default class Basket {
 
     if (!checkoutContainer) return;
 
-    const hasItems = this.items.length > 0;
+    const hasItems = this.getItems().length > 0;
 
     if (checkoutList) {
       this.renderCheckoutProducts('.basket--checkout .basket__list');
@@ -194,29 +154,28 @@ export default class Basket {
   }
 
   clear() {
-    localStorage.removeItem('basketItems');
+    this.basketService.clear();
     this.updateAll();
   }
 
   // Обновление отображения корзины
   updateBasketDisplay() {
     this.basketList.innerHTML = '';
-    this.items.forEach((product) => {
+    this.getItems().forEach((product) => {
       this.basketList.appendChild(this.createBasketItem(product)); // Добавляем товары в список
     });
   }
 
   // Обновление счётчика количества товаров в корзине
   updateBasketCounter() {
-    const total = this.items.reduce((sum, item) => sum + item.quantity, 0);
     if (this.basketCounter) {
-      this.basketCounter.textContent = total;
+      this.basketCounter.textContent = this.basketService.getTotalQuantity();
     }
   }
 
   // Обновление состояния блока, если корзина пуста
   updateEmptyBlock() {
-    const hasItems = this.items.length > 0;
+    const hasItems = this.getItems().length > 0;
     if (this.emptyBlock) {
       this.emptyBlock.style.display = hasItems ? 'none' : 'block';
     }
@@ -239,6 +198,6 @@ export default class Basket {
 
   // Получение всех товаров в корзине (геттер)
   getItems() {
-    return this.items;
+    return this.basketService.getItems();
   }
 }
