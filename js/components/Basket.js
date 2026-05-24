@@ -14,17 +14,27 @@ export default class Basket {
       document.querySelector('.basket__list') ?? document.createElement('ul');
     this.basketCounter = document.querySelector('.header__user-count');
     this.basketButton = document.querySelector('.header__user-btn');
-    this.basketElement = document.querySelector('.basket');
+    this.basketElement = document.querySelector('.header__basket');
     this.emptyBlock = document.querySelector('.basket__empty-block');
     this.checkoutButton = document.querySelector('.basket__link');
 
-    this.updateBasketDisplay();
-    this.updateUI();
+    this.updateAll();
 
     // Обработчик для кнопки открытия/закрытия корзины
-    this.basketButton.addEventListener('click', () => {
-      this.basketElement.classList.toggle('basket--active');
-    });
+    if (this.basketButton && this.basketElement) {
+      this.basketButton.addEventListener('click', (event) => {
+        event.stopPropagation();
+        this.basketElement.classList.toggle('basket--active');
+      });
+
+      this.basketElement.addEventListener('click', (event) => {
+        event.stopPropagation();
+      });
+
+      document.addEventListener('click', () => {
+        this.basketElement.classList.remove('basket--active');
+      });
+    }
   }
 
   // Геттер для получения товаров из localStorage
@@ -55,8 +65,7 @@ export default class Basket {
     }
 
     this.items = items;
-    this.updateBasketDisplay();
-    this.updateUI();
+    this.updateAll();
   }
 
   // Удаление товара из корзины
@@ -73,8 +82,8 @@ export default class Basket {
     }
 
     this.items = items;
-    this.updateBasketDisplay();
-    this.updateUI();
+
+    this.updateAll();
   }
 
   // Создание элемента корзины для каждого товара
@@ -114,6 +123,81 @@ export default class Basket {
     return itemElement;
   }
 
+  // Создание элемента корзины для каждого товара на странице оформления заказа
+  renderCheckoutProducts(containerSelector) {
+    const container = document.querySelector(containerSelector);
+
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    this.items.forEach((product) => {
+      container.append(this.createBasketItem(product));
+    });
+  }
+
+  // счётчика суммы товаров в корзине
+  renderCheckoutTotal(selector) {
+    const totalElement = document.querySelector(selector);
+
+    if (!totalElement) return;
+
+    const total = this.items.reduce((sum, product) => {
+      return sum + product.price.new * product.quantity;
+    }, 0);
+
+    totalElement.textContent = `${total} руб`;
+  }
+
+  renderCheckoutState() {
+    const checkoutContainer = document.querySelector('.basket--checkout');
+    const checkoutList = document.querySelector(
+      '.basket--checkout .basket__list'
+    );
+    const checkoutSummary = document.querySelector('.checkout__summary');
+    const checkoutForm = document.querySelector('.checkout-form');
+
+    if (!checkoutContainer) return;
+
+    const hasItems = this.items.length > 0;
+
+    if (checkoutList) {
+      this.renderCheckoutProducts('.basket--checkout .basket__list');
+    }
+
+    this.renderCheckoutTotal('.checkout__total-price');
+
+    let emptyBlock = checkoutContainer.querySelector('.basket__empty-block');
+
+    if (!hasItems) {
+      if (checkoutList) {
+        checkoutList.innerHTML = '';
+      }
+
+      if (!emptyBlock) {
+        emptyBlock = getDivEl('basket__empty-block');
+        checkoutContainer.append(emptyBlock);
+      }
+
+      emptyBlock.textContent = 'Корзина пуста';
+    } else if (emptyBlock) {
+      emptyBlock.remove();
+    }
+
+    if (checkoutSummary) {
+      checkoutSummary.style.display = hasItems ? 'flex' : 'none';
+    }
+
+    if (checkoutForm) {
+      checkoutForm.style.display = hasItems ? 'block' : 'none';
+    }
+  }
+
+  clear() {
+    localStorage.removeItem('basketItems');
+    this.updateAll();
+  }
+
   // Обновление отображения корзины
   updateBasketDisplay() {
     this.basketList.innerHTML = '';
@@ -145,6 +229,12 @@ export default class Basket {
   updateUI() {
     this.updateBasketCounter();
     this.updateEmptyBlock();
+  }
+
+  updateAll() {
+    this.updateBasketDisplay();
+    this.updateUI();
+    this.renderCheckoutState();
   }
 
   // Получение всех товаров в корзине (геттер)

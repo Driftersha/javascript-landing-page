@@ -26,10 +26,10 @@ export function updateProductCatalog(sortedProducts, basket) {
   catalogList.innerHTML = ''; // Очищаем текущий каталог
 
   sortedProducts.forEach((product) => {
-    const productCard = new ProductCard(product);
-    const card = productCard.createCard();
+    const productCard = new ProductCard(product, basket);
+    const card = productCard.renderCard();
 
-    const button = card.querySelector('.product-card__link');
+    const button = card.querySelector('.product-card__btn');
     if (button) {
       button.dataset.id = product.id;
       button.addEventListener('click', (event) => {
