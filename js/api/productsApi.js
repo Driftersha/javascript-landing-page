@@ -1,3 +1,9 @@
-export function getProducts() {
-  return fetch('./data/data.json').then((response) => response.json());
+export async function getProducts() {
+  const response = await fetch('./data/data.json');
+
+  if (!response.ok) {
+    throw new Error(`Ошибка загрузки товаров: ${response.status}`);
+  }
+
+  return response.json();
 }

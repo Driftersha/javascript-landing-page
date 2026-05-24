@@ -7,29 +7,28 @@ import { getSortOption, sortProducts } from '../components/sort.js';
 const CATALOG_LIST_SELECTOR = '.catalog__list';
 const CATALOG_PAGINATION_SELECTOR = '.catalog__pagination';
 
-export function initCatalogPage(basket) {
+export async function initCatalogPage(basket) {
   const dayProductsList = document.querySelector('.day-products__list');
   const catalogList = document.querySelector(CATALOG_LIST_SELECTOR);
 
   if (!dayProductsList && !catalogList) return;
 
-  getProducts()
-    .then((products) => {
-      const onAddToBasket = (product) => {
-        basket.addItem(product);
-      };
+  try {
+    const products = await getProducts();
+    const onAddToBasket = (product) => {
+      basket.addItem(product);
+    };
 
-      if (dayProductsList) {
-        initDayProductsSlider(products, onAddToBasket);
-      }
+    if (dayProductsList) {
+      initDayProductsSlider(products, onAddToBasket);
+    }
 
-      if (catalogList) {
-        initCatalog(products, onAddToBasket);
-      }
-    })
-    .catch((error) => {
-      console.error('Ошибка при загрузке данных:', error);
-    });
+    if (catalogList) {
+      initCatalog(products, onAddToBasket);
+    }
+  } catch (error) {
+    console.error('Ошибка при загрузке данных:', error);
+  }
 }
 
 function initCatalog(products, onAddToBasket) {
