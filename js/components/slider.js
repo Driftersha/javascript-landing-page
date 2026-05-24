@@ -1,6 +1,6 @@
 import ProductCardSmall from './productCardSmall.js';
 
-export function initDayProductsSlider(products, basket) {
+export function initDayProductsSlider(products, onAddToBasket) {
   const dayProductsList = document.querySelector('.day-products__list');
 
   if (!dayProductsList) return;
@@ -11,7 +11,7 @@ export function initDayProductsSlider(products, basket) {
 
   // Создаем карточки для каждого товара
   dayProducts.forEach((product) => {
-    const productCard = new ProductCardSmall(product, basket);
+    const productCard = new ProductCardSmall(product, onAddToBasket);
     const listItem = productCard.render();
     dayProductsList.appendChild(listItem);
   });
