@@ -6,7 +6,10 @@ import { initFilters } from './components/filters.js';
 import { sortProducts, getSortOption } from './components/sort.js';
 import { initAccordion } from './components/accordion.js';
 import { initDayProductsSlider } from './components/slider.js';
-import { initFormValidation } from './components/formValidation.js';
+import {
+  initCheckoutValidation,
+  initFormValidation,
+} from './components/formValidation.js';
 import { setupPagination } from './components/pagination.js';
 import { initGlobalRipple } from './components/ripple.js';
 
@@ -21,72 +24,87 @@ initFormValidation();
 
 // --- Инициализация корзины (компонент, реализующий добавление и хранение товаров) ---
 const basket = new Basket();
+initCheckoutValidation(basket);
 
 // --- Массивы для хранения товаров и отфильтрованных товаров ---
 let products = [];
 let filteredProducts = [];
 
 // --- Загрузка данных для слайдера "Товары дня" ---
-fetch('./data/data.json')
-  .then((response) => response.json())
-  .then((data) => {
-    initDayProductsSlider(data, basket);
-  })
-  .catch((error) => {
-    console.error('Ошибка загрузки данных для слайдера:', error);
-  });
+const dayProductsList = document.querySelector('.day-products__list');
+
+if (dayProductsList) {
+  fetch('./data/data.json')
+    .then((response) => response.json())
+    .then((data) => {
+      initDayProductsSlider(data, basket);
+    })
+    .catch((error) => {
+      console.error('Ошибка загрузки данных для слайдера:', error);
+    });
+}
 
 // --- Загрузка данных каталога и инициализация фильтров, сортировки, пагинации ---
-fetch('./data/data.json')
-  .then((response) => response.json())
-  .then((data) => {
-    products = data;
-    filteredProducts = [...products];
+const catalogList = document.querySelector('.catalog__list');
 
-    // Инициализация пагинации с полным списком товаров
-    setupPagination(
-      filteredProducts,
-      '.catalog__list',
-      '.catalog__pagination',
-      basket
-    );
+if (catalogList) {
+  fetch('./data/data.json')
+    .then((response) => response.json())
+    .then((data) => {
+      products = data;
+      filteredProducts = [...products];
 
-    // Инициализация фильтров
-    initFilters(
-      products,
-      (filtered) => {
-        filteredProducts = filtered;
-        const sortOption = getSortOption();
-        const sortedProducts = sortProducts([...filteredProducts], sortOption);
+      // Инициализация пагинации с полным списком товаров
+      setupPagination(
+        filteredProducts,
+        '.catalog__list',
+        '.catalog__pagination',
+        basket
+      );
 
-        // Повторная инициализация пагинации для отфильтрованных и отсортированных данных
-        setupPagination(
-          sortedProducts,
-          '.catalog__list',
-          '.catalog__pagination',
-          basket
-        );
-      },
-      basket
-    );
+      // Инициализация фильтров
+      initFilters(
+        products,
+        (filtered) => {
+          filteredProducts = filtered;
+          const sortOption = getSortOption();
+          const sortedProducts = sortProducts(
+            [...filteredProducts],
+            sortOption
+          );
 
-    // Инициализация сортировки
-    const sortSelect = document.querySelector('.catalog__sort-select');
-    if (sortSelect) {
-      sortSelect.addEventListener('change', () => {
-        const sortOption = getSortOption();
-        const sortedProducts = sortProducts([...filteredProducts], sortOption);
+          // Повторная инициализация пагинации для отфильтрованных и отсортированных данных
+          setupPagination(
+            sortedProducts,
+            '.catalog__list',
+            '.catalog__pagination',
+            basket
+          );
+        },
+        basket
+      );
 
-        // Обновление пагинации при выборе новой сортировки
-        setupPagination(
-          sortedProducts,
-          '.catalog__list',
-          '.catalog__pagination',
-          basket
-        );
-      });
-    }
-  })
-  .catch((error) => {
-    console.error('Ошибка при загрузке данных товаров:', error);
-  });
+      // Инициализация сортировки
+      const sortSelect = document.querySelector('.catalog__sort-select');
+      if (sortSelect) {
+        sortSelect.addEventListener('change', () => {
+          const sortOption = getSortOption();
+          const sortedProducts = sortProducts(
+            [...filteredProducts],
+            sortOption
+          );
+
+          // Обновление пагинации при выборе новой сортировки
+          setupPagination(
+            sortedProducts,
+            '.catalog__list',
+            '.catalog__pagination',
+            basket
+          );
+        });
+      }
+    })
+    .catch((error) => {
+      console.error('Ошибка при загрузке данных товаров:', error);
+    });
+}

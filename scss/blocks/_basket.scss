@@ -12,6 +12,7 @@
   transition: opacity $transition, transform $transition;
   z-index: 10;
 
+
   &--active {
     opacity: 1;
     transform: translateY(0);
@@ -20,8 +21,10 @@
 
   &__empty-block {
     text-align: center;
-    padding: 40px;
-    width: 366px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 25.2px;
+    width: 100%;
   }
 
   &__list {
@@ -42,6 +45,17 @@
     font-weight: 500;
     line-height: 16.8px;
     position: relative;
+  }
+
+  &--checkout {
+    opacity: 1;
+    position: static;
+    pointer-events: all;
+
+    .basket__list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   &__item-close {

@@ -1,7 +1,6 @@
 import {
   getDivEl,
   getImgEl,
-  getLinkEl,
   getSpanEl,
   getH2El,
   getBtnEl,
@@ -32,14 +31,19 @@ export default class ProductCard {
     visualContainer.appendChild(img);
 
     const moreInfoContainer = getDivEl('product-card__more');
-    const addToCartBtn = getLinkEl('#', 'product-card__link btn btn--icon');
+    const addToCartBtn = getBtnEl(
+      'Добавить в корзину',
+      'button',
+      'product-card__btn btn btn--icon'
+    );
     const cartIcon = getSvgIcon(ICON_BASKET, 'btn__text', 24, 24);
     const cartText = getSpanEl(ADD_TO_CART_TEXT, 'btn__text');
     addToCartBtn.append(cartIcon, cartText);
 
-    const moreDetailsBtn = getLinkEl(
-      '#',
-      'product-card__link btn btn--secondary'
+    const moreDetailsBtn = getBtnEl(
+      'Подробнее',
+      'button',
+      'product-card__btn btn btn--secondary'
     );
     moreDetailsBtn.append(getSpanEl(MORE_DETAILS_TEXT, 'btn__text'));
 
