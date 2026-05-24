@@ -81,7 +81,7 @@
                 </li> -->
 
               </ul>
-              <a class="basket__link btn" href="#">Перейти к оформлению</a>
+              <a class="basket__link btn" href="./checkout.html">Перейти к оформлению</a>
               <div class="basket__empty-block">Корзина пока пуста</div>
             </div>
           </li>
@@ -608,12 +608,13 @@
           <form action="https://httpbin.org/post" method="POST" class="questions__form">
             <div class="questions__inner">
               <div class="custom-input">
-                <label for="name" class="custon-input__label">Ваше имя</label>
-                <input type="text" class="custom-input__field" id="name" placeholder="Светлана">
+                <label for="name" class="custom-input__label">Ваше имя</label>
+                <input type="text" class="custom-input__field" id="name" placeholder="Светлана" autocomplete="name">
               </div>
               <div class="custom-input">
-                <label for="email" class="custon-input__label">Ваша почта</label>
-                <input type="email" class="custom-input__field" id="email" placeholder="example@example.com">
+                <label for="email" class="custom-input__label">Ваша почта</label>
+                <input type="email" class="custom-input__field" id="email" placeholder="example@example.com"
+                  autocomplete="email">
               </div>
               <button class="questions__btn btn btn--big" type="submit">Отправить заявку</button>
             </div>

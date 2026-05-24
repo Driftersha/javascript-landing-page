@@ -19,14 +19,6 @@ export function getImgEl(src, alt = '', className = 'product-card__img') {
   return imgEl;
 }
 
-// Функция для создания элемента <a> с указанным href и классами.
-export function getLinkEl(href, className = 'product-card__link') {
-  const linkEl = document.createElement('a');
-  linkEl.classList.add(...className.split(' '));
-  linkEl.href = href;
-  return linkEl;
-}
-
 // Функция для создания элемента <span> с текстом и классом.
 export function getSpanEl(text, className) {
   const spanEl = document.createElement('span');
