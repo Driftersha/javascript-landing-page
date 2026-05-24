@@ -2,8 +2,8 @@ import ProductCard from './ProductCard.js';
 import { getLiEl } from './domHelpers.js';
 
 export default class ProductCardSmall extends ProductCard {
-  constructor(product, basket) {
-    super(product, basket);
+  constructor(product, onAddToBasket) {
+    super(product, onAddToBasket);
   }
 
   render() {

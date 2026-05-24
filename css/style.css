@@ -1436,6 +1436,7 @@ button {
   font-size: 14px;
   font-weight: 600;
   line-height: 25.2px;
+  min-width: 300px;
   width: 100%;
 }
 .basket__list {

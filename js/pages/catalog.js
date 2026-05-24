@@ -1,3 +1,4 @@
+import { getProducts } from '../api/productsApi.js';
 import { initFilters } from '../components/filters.js';
 import { setupPagination } from '../components/pagination.js';
 import { initDayProductsSlider } from '../components/slider.js';
@@ -12,15 +13,18 @@ export function initCatalogPage(basket) {
 
   if (!dayProductsList && !catalogList) return;
 
-  fetch('./data/data.json')
-    .then((response) => response.json())
+  getProducts()
     .then((products) => {
+      const onAddToBasket = (product) => {
+        basket.addItem(product);
+      };
+
       if (dayProductsList) {
-        initDayProductsSlider(products, basket);
+        initDayProductsSlider(products, onAddToBasket);
       }
 
       if (catalogList) {
-        initCatalog(products, basket);
+        initCatalog(products, onAddToBasket);
       }
     })
     .catch((error) => {
@@ -28,34 +32,33 @@ export function initCatalogPage(basket) {
     });
 }
 
-function initCatalog(products, basket) {
+function initCatalog(products, onAddToBasket) {
   let filteredProducts = [...products];
 
-  renderCatalog(products, basket);
+  renderCatalog(products, onAddToBasket);
 
   initFilters(
     products,
     (filtered) => {
       filteredProducts = filtered;
-      renderCatalog(getSortedProducts(filteredProducts), basket);
-    },
-    basket
+      renderCatalog(getSortedProducts(filteredProducts), onAddToBasket);
+    }
   );
 
   const sortSelect = document.querySelector('.catalog__sort-select');
   if (sortSelect) {
     sortSelect.addEventListener('change', () => {
-      renderCatalog(getSortedProducts(filteredProducts), basket);
+      renderCatalog(getSortedProducts(filteredProducts), onAddToBasket);
     });
   }
 }
 
-function renderCatalog(products, basket) {
+function renderCatalog(products, onAddToBasket) {
   setupPagination(
     products,
     CATALOG_LIST_SELECTOR,
     CATALOG_PAGINATION_SELECTOR,
-    basket
+    onAddToBasket
   );
 }
 
