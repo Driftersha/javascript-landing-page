@@ -6,6 +6,8 @@ import { getSortOption, sortProducts } from '../components/sort.js';
 
 const CATALOG_LIST_SELECTOR = '.catalog__list';
 const CATALOG_PAGINATION_SELECTOR = '.catalog__pagination';
+const CATALOG_ERROR_CLASS = 'catalog__error';
+const CATALOG_ERROR_TEXT = 'Не удалось загрузить товары. Попробуйте позже.';
 
 export async function initCatalogPage(basket) {
   const dayProductsList = document.querySelector('.day-products__list');
@@ -28,6 +30,7 @@ export async function initCatalogPage(basket) {
     }
   } catch (error) {
     console.error('Ошибка при загрузке данных:', error);
+    renderCatalogError();
   }
 }
 
@@ -50,6 +53,8 @@ function initCatalog(products, onAddToBasket) {
 }
 
 function renderCatalog(products, onAddToBasket) {
+  removeCatalogError();
+
   setupPagination(
     products,
     CATALOG_LIST_SELECTOR,
@@ -60,4 +65,34 @@ function renderCatalog(products, onAddToBasket) {
 
 function getSortedProducts(products) {
   return sortProducts([...products], getSortOption());
+}
+
+function renderCatalogError() {
+  const catalogList = document.querySelector(CATALOG_LIST_SELECTOR);
+  const pagination = document.querySelector(CATALOG_PAGINATION_SELECTOR);
+
+  if (!catalogList) return;
+
+  catalogList.innerHTML = '';
+
+  if (pagination) {
+    pagination.innerHTML = '';
+    pagination.style.display = 'none';
+  }
+
+  removeCatalogError();
+
+  const errorMessage = document.createElement('p');
+  errorMessage.classList.add(CATALOG_ERROR_CLASS);
+  errorMessage.textContent = CATALOG_ERROR_TEXT;
+
+  catalogList.insertAdjacentElement('afterend', errorMessage);
+}
+
+function removeCatalogError() {
+  const errorMessage = document.querySelector(`.${CATALOG_ERROR_CLASS}`);
+
+  if (errorMessage) {
+    errorMessage.remove();
+  }
 }
