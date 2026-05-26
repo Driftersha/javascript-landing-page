@@ -1685,6 +1685,12 @@ button {
   grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
   gap: 40px;
 }
+.catalog__error {
+  margin: 0 0 40px;
+  font-size: 18px;
+  line-height: 25.2px;
+  color: #737373;
+}
 .catalog__pagination {
   display: flex;
   align-items: center;
