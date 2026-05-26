@@ -38,37 +38,36 @@ export async function initCatalogPage(basket) {
 
 function initCatalog(products, onAddToBasket) {
   let filteredProducts = [...products];
-
-  renderCatalog(products, onAddToBasket);
-
-  initFilters(products, (filtered) => {
-    filteredProducts = filtered;
-    renderCatalog(getSortedProducts(filteredProducts), onAddToBasket);
-  });
-
-  const sortSelect = document.querySelector('.catalog__sort-select');
-  if (sortSelect) {
-    sortSelect.addEventListener('change', () => {
-      renderCatalog(getSortedProducts(filteredProducts), onAddToBasket);
-    });
-  }
-}
-
-function renderCatalog(products, onAddToBasket) {
-  removeCatalogError();
-  removeCatalogEmpty();
-
-  if (products.length === 0) {
-    renderCatalogEmpty();
-    return;
-  }
-
-  setupPagination(
+  const updatePagination = setupPagination(
     products,
     CATALOG_LIST_SELECTOR,
     CATALOG_PAGINATION_SELECTOR,
     onAddToBasket
   );
+
+  initFilters(products, (filtered) => {
+    filteredProducts = filtered;
+    renderCatalog(getSortedProducts(filteredProducts), { resetPage: true });
+  });
+
+  const sortSelect = document.querySelector('.catalog__sort-select');
+  if (sortSelect) {
+    sortSelect.addEventListener('change', () => {
+      renderCatalog(getSortedProducts(filteredProducts));
+    });
+  }
+
+  function renderCatalog(productsToRender, options = {}) {
+    removeCatalogError();
+    removeCatalogEmpty();
+
+    if (productsToRender.length === 0) {
+      renderCatalogEmpty();
+      return;
+    }
+
+    updatePagination(productsToRender, options);
+  }
 }
 
 function getSortedProducts(products) {

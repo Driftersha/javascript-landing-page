@@ -21,8 +21,7 @@ function renderPagination(
   pagination,
   currentPage,
   itemsPerPage,
-  onAddToBasket,
-  updatePagination
+  onPageChange
 ) {
   pagination.innerHTML = '';
   if (products.length <= itemsPerPage) {
@@ -47,23 +46,7 @@ function renderPagination(
     if (i === currentPage) btn.classList.add('active');
 
     btn.addEventListener('click', () => {
-      currentPage = i;
-
-      renderPage(
-        currentPage,
-        products,
-        document.querySelector('.catalog__list'),
-        itemsPerPage,
-        onAddToBasket
-      );
-      renderPagination(
-        products,
-        pagination,
-        currentPage,
-        itemsPerPage,
-        onAddToBasket,
-        updatePagination
-      );
+      onPageChange(i);
     });
 
     li.appendChild(btn);
@@ -81,36 +64,44 @@ export function setupPagination(
 ) {
   const container = document.querySelector(containerSelector);
   const pagination = document.querySelector(paginationSelector);
-  const currentPage = 1;
+  let currentPage = 1;
 
-  renderPage(currentPage, products, container, itemsPerPage, onAddToBasket);
-  renderPagination(
-    products,
-    pagination,
-    currentPage,
-    itemsPerPage,
-    onAddToBasket,
-    updatePagination
-  );
+  function getPageCount(pageProducts) {
+    return Math.max(1, Math.ceil(pageProducts.length / itemsPerPage));
+  }
 
-  // Функция для обновления пагинации с новыми данными
-  function updatePagination(newProducts) {
+  function render(pageProducts) {
     renderPage(
       currentPage,
-      newProducts,
+      pageProducts,
       container,
       itemsPerPage,
       onAddToBasket
     );
     renderPagination(
-      newProducts,
+      pageProducts,
       pagination,
       currentPage,
       itemsPerPage,
-      onAddToBasket,
-      updatePagination
+      (page) => {
+        currentPage = page;
+        render(pageProducts);
+      }
     );
   }
+
+  // Функция для обновления пагинации с новыми данными
+  function updatePagination(newProducts, options = {}) {
+    if (options.resetPage) {
+      currentPage = 1;
+    } else {
+      currentPage = Math.min(currentPage, getPageCount(newProducts));
+    }
+
+    render(newProducts);
+  }
+
+  updatePagination(products, { resetPage: true });
 
   return updatePagination;
 }
