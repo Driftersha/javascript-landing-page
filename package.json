@@ -1,0 +1,16 @@
+{
+  "name": "briaton-landing-page",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"**/*.{html,scss,css,js,json}\"",
+    "check": "eslint . && prettier . --check"
+  },
+  "devDependencies": {
+    "eslint": "^9.28.0",
+    "prettier": "^3.5.3"
+  }
+}

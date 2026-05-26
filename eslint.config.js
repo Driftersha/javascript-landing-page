@@ -1,0 +1,66 @@
+export default [
+  {
+    ignores: [
+      'css/**',
+      'js/vendor/**',
+      'scss/css/**',
+      '**/*.min.js',
+      '**/*.map',
+    ],
+  },
+  {
+    files: ['js/**/*.js'],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'module',
+      globals: {
+        console: 'readonly',
+        document: 'readonly',
+        Element: 'readonly',
+        fetch: 'readonly',
+        FormData: 'readonly',
+        localStorage: 'readonly',
+        location: 'readonly',
+        navigator: 'readonly',
+        setTimeout: 'readonly',
+        Swiper: 'readonly',
+        tippy: 'readonly',
+        URL: 'readonly',
+        window: 'readonly',
+        JustValidate: 'readonly',
+      },
+    },
+    rules: {
+      'array-callback-return': 'error',
+      eqeqeq: ['error', 'always'],
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      'no-constant-condition': 'error',
+      'no-debugger': 'error',
+      'no-duplicate-imports': 'error',
+      'no-else-return': 'warn',
+      'no-empty': ['error', { allowEmptyCatch: false }],
+      'no-irregular-whitespace': 'error',
+      'no-redeclare': 'error',
+      'no-self-assign': 'error',
+      'no-shadow': 'warn',
+      'no-undef': 'error',
+      'no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
+      'no-use-before-define': [
+        'error',
+        {
+          functions: false,
+          classes: true,
+          variables: true,
+        },
+      ],
+      'object-shorthand': 'warn',
+      'prefer-const': 'warn',
+    },
+  },
+];

@@ -28,9 +28,8 @@ function renderPagination(
   if (products.length <= itemsPerPage) {
     pagination.style.display = 'none';
     return;
-  } else {
-    pagination.style.display = 'flex';
   }
+  pagination.style.display = 'flex';
 
   const pages = Math.ceil(products.length / itemsPerPage);
 
@@ -82,7 +81,7 @@ export function setupPagination(
 ) {
   const container = document.querySelector(containerSelector);
   const pagination = document.querySelector(paginationSelector);
-  let currentPage = 1;
+  const currentPage = 1;
 
   renderPage(currentPage, products, container, itemsPerPage, onAddToBasket);
   renderPagination(
@@ -96,7 +95,13 @@ export function setupPagination(
 
   // Функция для обновления пагинации с новыми данными
   function updatePagination(newProducts) {
-    renderPage(currentPage, newProducts, container, itemsPerPage, onAddToBasket);
+    renderPage(
+      currentPage,
+      newProducts,
+      container,
+      itemsPerPage,
+      onAddToBasket
+    );
     renderPagination(
       newProducts,
       pagination,

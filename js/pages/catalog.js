@@ -36,13 +36,10 @@ function initCatalog(products, onAddToBasket) {
 
   renderCatalog(products, onAddToBasket);
 
-  initFilters(
-    products,
-    (filtered) => {
-      filteredProducts = filtered;
-      renderCatalog(getSortedProducts(filteredProducts), onAddToBasket);
-    }
-  );
+  initFilters(products, (filtered) => {
+    filteredProducts = filtered;
+    renderCatalog(getSortedProducts(filteredProducts), onAddToBasket);
+  });
 
   const sortSelect = document.querySelector('.catalog__sort-select');
   if (sortSelect) {
