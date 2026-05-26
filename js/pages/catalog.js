@@ -8,6 +8,8 @@ const CATALOG_LIST_SELECTOR = '.catalog__list';
 const CATALOG_PAGINATION_SELECTOR = '.catalog__pagination';
 const CATALOG_ERROR_CLASS = 'catalog__error';
 const CATALOG_ERROR_TEXT = 'Не удалось загрузить товары. Попробуйте позже.';
+const CATALOG_EMPTY_CLASS = 'catalog__empty';
+const CATALOG_EMPTY_TEXT = 'По выбранным фильтрам товары не найдены';
 
 export async function initCatalogPage(basket) {
   const dayProductsList = document.querySelector('.day-products__list');
@@ -54,6 +56,12 @@ function initCatalog(products, onAddToBasket) {
 
 function renderCatalog(products, onAddToBasket) {
   removeCatalogError();
+  removeCatalogEmpty();
+
+  if (products.length === 0) {
+    renderCatalogEmpty();
+    return;
+  }
 
   setupPagination(
     products,
@@ -94,5 +102,33 @@ function removeCatalogError() {
 
   if (errorMessage) {
     errorMessage.remove();
+  }
+}
+
+function renderCatalogEmpty() {
+  const catalogList = document.querySelector(CATALOG_LIST_SELECTOR);
+  const pagination = document.querySelector(CATALOG_PAGINATION_SELECTOR);
+
+  if (!catalogList) return;
+
+  catalogList.innerHTML = '';
+
+  if (pagination) {
+    pagination.innerHTML = '';
+    pagination.style.display = 'none';
+  }
+
+  const emptyMessage = document.createElement('p');
+  emptyMessage.classList.add(CATALOG_EMPTY_CLASS);
+  emptyMessage.textContent = CATALOG_EMPTY_TEXT;
+
+  catalogList.insertAdjacentElement('afterend', emptyMessage);
+}
+
+function removeCatalogEmpty() {
+  const emptyMessage = document.querySelector(`.${CATALOG_EMPTY_CLASS}`);
+
+  if (emptyMessage) {
+    emptyMessage.remove();
   }
 }
