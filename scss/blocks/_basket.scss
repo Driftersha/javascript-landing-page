@@ -5,13 +5,14 @@
   position: absolute;
   right: 0;
   top: calc(100% + 18px);
-  box-shadow: 0 10px 60px 0 #4848481A;
+  box-shadow: 0 10px 60px 0 #4848481a;
   opacity: 0;
   transform: translateY(-20px);
   pointer-events: none;
-  transition: opacity $transition, transform $transition;
+  transition:
+    opacity $transition,
+    transform $transition;
   z-index: 10;
-
 
   &--active {
     opacity: 1;
@@ -80,7 +81,6 @@
     width: 60px;
     overflow: hidden;
 
-
     img {
       height: 60px;
       object-fit: contain;
@@ -92,7 +92,7 @@
     height: 20px;
     width: 20px;
     border-radius: 50%;
-    background-color: #9BE198;
+    background-color: #9be198;
     position: absolute;
     z-index: 20;
     top: -10px;

@@ -60,7 +60,7 @@
 
     &:not(:last-child) {
       &::before {
-        content: "";
+        content: '';
         position: absolute;
         top: 0;
         width: 1px;

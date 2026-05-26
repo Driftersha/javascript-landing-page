@@ -29,7 +29,7 @@
   &__sublist {
     background-color: $color-white;
     border-radius: 8px;
-    box-shadow: 0 10px 60px 0 #4848481A;
+    box-shadow: 0 10px 60px 0 #4848481a;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -43,7 +43,9 @@
     transform: translateY(-20px);
     opacity: 0;
     pointer-events: none;
-    transition: opacity $transition, transform $transition;
+    transition:
+      opacity $transition,
+      transform $transition;
   }
 
   &__sublink {

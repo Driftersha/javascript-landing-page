@@ -80,7 +80,7 @@ export default class Basket {
     itemElement.append(imgWrapper, nameEl, priceEl, quantityEl, removeBtn);
 
     // Обработчик для удаления товара при клике на кнопку
-    removeBtn.addEventListener('click', (e) => {
+    removeBtn.addEventListener('click', () => {
       this.removeItem(product.id);
     });
 
