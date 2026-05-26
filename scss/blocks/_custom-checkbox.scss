@@ -1,18 +1,18 @@
 .custom-checkbox {
   $root: &;
 
-&__field:checked {
-  + #{$root}__label {
-    #{$root}__icon {
-      opacity: 1;
-    }
+  &__field:checked {
+    + #{$root}__label {
+      #{$root}__icon {
+        opacity: 1;
+      }
 
-    &::before  {
-      background-color: $color-granny-smith-apple;
-      border-color: $color-granny-smith-apple;
+      &::before {
+        background-color: $color-granny-smith-apple;
+        border-color: $color-granny-smith-apple;
+      }
     }
   }
-}
 
   &__label {
     display: flex;
@@ -31,7 +31,7 @@
     }
 
     &::before {
-      content: "";
+      content: '';
       height: 16px;
       width: 16px;
       border: 1px solid $color-dark-gray;
@@ -40,7 +40,9 @@
       left: 0;
       top: 50%;
       transform: translateY(-50%);
-      transition: border-color $transition, background-color $transition;
+      transition:
+        border-color $transition,
+        background-color $transition;
     }
   }
 
