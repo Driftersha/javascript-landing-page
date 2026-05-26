@@ -44,6 +44,13 @@
     gap: 40px;
   }
 
+  &__error {
+    margin: 0 0 40px;
+    font-size: 18px;
+    line-height: 25.2px;
+    color: $color-dim-gray;
+  }
+
   &__pagination {
     display: flex;
     align-items: center;
