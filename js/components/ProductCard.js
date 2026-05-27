@@ -8,6 +8,7 @@ import {
   getLiEl,
   getSvgIcon,
 } from './domHelpers.js';
+import { formatPrice } from '../utils/priceFormatter.js';
 
 // Константы для иконок и текстов
 const ICON_BASKET = 'images/sprite.svg#icon-basket';
@@ -58,12 +59,8 @@ export default class ProductCard {
     const infoContainer = getDivEl('product-card__info');
     const title = getH2El(this.product.name);
 
-    const formattedOldPrice = new Intl.NumberFormat('ru-RU').format(
-      this.product.price.old
-    );
-    const formattedNewPrice = new Intl.NumberFormat('ru-RU').format(
-      this.product.price.new
-    );
+    const formattedOldPrice = formatPrice(this.product.price.old);
+    const formattedNewPrice = formatPrice(this.product.price.new);
 
     const oldPrice = this.createPriceBlock(
       formattedOldPrice,

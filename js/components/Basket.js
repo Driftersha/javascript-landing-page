@@ -7,6 +7,7 @@ import {
   getLiEl,
   getSvgIcon,
 } from './domHelpers.js';
+import { formatPriceWithCurrency } from '../utils/priceFormatter.js';
 
 export default class Basket {
   constructor(basketService) {
@@ -65,7 +66,10 @@ export default class Basket {
     imgWrapper.append(img);
 
     const nameEl = getSpanEl(product.name, 'basket__name');
-    const priceEl = getSpanEl(`${product.price.new} руб`, 'basket__price');
+    const priceEl = getSpanEl(
+      formatPriceWithCurrency(product.price.new),
+      'basket__price'
+    );
     const quantityEl = getSpanEl(product.quantity, 'basket__quantity');
 
     const removeBtn = getBtnEl('Удалить товар', 'button', 'basket__item-close');
@@ -106,7 +110,9 @@ export default class Basket {
 
     if (!totalElement) return;
 
-    totalElement.textContent = `${this.basketService.getTotalPrice()} руб`;
+    totalElement.textContent = formatPriceWithCurrency(
+      this.basketService.getTotalPrice()
+    );
   }
 
   renderCheckoutState() {
