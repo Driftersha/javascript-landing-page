@@ -10,7 +10,7 @@ export function getDivEl(classes) {
   return div;
 }
 
-// Функция для создания элемента <img> с заданными аттрибутами (src, alt, класс).
+// Функция для создания элемента <img> с заданными атрибутами (src, alt, класс).
 export function getImgEl(src, alt = '', className = 'product-card__img') {
   const imgEl = document.createElement('img');
   imgEl.classList.add(className);

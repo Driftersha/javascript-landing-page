@@ -90,7 +90,7 @@
 }
 
 .tippy-box[data-theme~=lightwhite] {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   color: #000000;
   box-shadow: 0 10px 60px 0 rgba(72, 72, 72, 0.1);
   border-radius: 8px;
