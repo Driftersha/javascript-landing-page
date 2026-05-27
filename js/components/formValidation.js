@@ -25,7 +25,7 @@ export function initFormValidation() {
     ])
     .addField('#email', [
       { rule: 'required', errorMessage: 'Введите вашу почту' },
-      { rule: 'email', errorMessage: 'Почта введена не верно' },
+      { rule: 'email', errorMessage: 'Почта введена неверно' },
     ])
     .addField('#agree', [
       { rule: 'required', errorMessage: 'Согласие обязательно' },
