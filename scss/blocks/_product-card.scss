@@ -5,14 +5,15 @@
   $root: &;
 
   &--small {
-    width: 290px;
+    width: 100%;
 
     #{$root}__visual {
-      height: 344px;
+      height: auto;
+      aspect-ratio: 290 / 344;
     }
 
     #{$root}__img {
-      height: 344px;
+      height: 100%;
     }
   }
 
@@ -20,7 +21,8 @@
     background-color: $color-white-smoke;
     border-radius: 12px;
     display: flex;
-    height: 436px;
+    aspect-ratio: 290 / 436;
+    height: auto;
     justify-content: center;
     overflow: hidden;
     position: relative;
@@ -34,9 +36,10 @@
   }
 
   &__img {
-    height: 436px;
+    height: 100%;
     object-fit: contain;
-    width: 290px;
+    width: 100%;
+    max-width: 290px;
     transform: scale(1.03);
   }
 
@@ -58,7 +61,7 @@
   }
 
   &__btn {
-    width: 210px;
+    width: min(210px, calc(100% - 32px));
     position: relative;
 
     &::before {

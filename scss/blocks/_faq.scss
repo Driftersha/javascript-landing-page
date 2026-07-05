@@ -3,6 +3,11 @@
     display: grid;
     grid-template-columns: 1fr 672px;
     gap: 69px;
+
+    @media (max-width: $vp-tablet) {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
   }
 
   &__title {
@@ -10,5 +15,10 @@
     font-size: 36px;
     font-weight: 700;
     line-height: 46.8px;
+
+    @media (max-width: $vp-mobile) {
+      font-size: 28px;
+      line-height: 36px;
+    }
   }
 }

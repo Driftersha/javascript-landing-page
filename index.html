@@ -26,63 +26,62 @@
           <span class="header__catalog-text">Каталог</span>
         </button>
 
-        <!-- Location -->
-        <div class="header__location location">
-          <svg class="location__icon" width="24" height="24" aria-hidden="true">
-            <use href="images/sprite.svg#icon-location"></use>
-          </svg>
-          <span class="location__text">Ваш город:</span>
-          <button class="location__city" type="button">
-            <span class="location__city-name">Оренбург</span>
-            <svg class="location__arrow" width="9" height="6" aria-hidden="true">
-              <use href="images/sprite.svg#icon-arrow-bottom"></use>
+        <div class="header__right">
+          <!-- Location -->
+          <div class="header__location location">
+            <svg class="location__icon" width="24" height="24" aria-hidden="true">
+              <use href="images/sprite.svg#icon-location"></use>
             </svg>
-          </button>
-          <ul class="location__sublist">
-            <li class="location__subitem">
-              <button class="location__sublink" type="button">Москва</button>
-            </li>
-            <li class="location__subitem">
-              <button class="location__sublink" type="button">
-                Оренбург
+            <span class="location__text">Ваш город:</span>
+            <button class="location__city" type="button">
+              <span class="location__city-name">Оренбург</span>
+              <svg class="location__arrow" width="9" height="6" aria-hidden="true">
+                <use href="images/sprite.svg#icon-arrow-bottom"></use>
+              </svg>
+            </button>
+            <ul class="location__sublist">
+              <li class="location__subitem">
+                <button class="location__sublink" type="button">Москва</button>
+              </li>
+              <li class="location__subitem">
+                <button class="location__sublink" type="button">
+                  Оренбург
+                </button>
+              </li>
+              <li class="location__subitem">
+                <button class="location__sublink" type="button">
+                  Санкт-Петербург
+                </button>
+              </li>
+            </ul>
+          </div>
+          <!-- User list -->
+          <ul class="header__user-list">
+            <li class="header__user-item">
+              <button class="header__user-btn" type="button">
+                <span class="header__user-text">Корзина</span>
+                <svg class="header__user-icon" width="24" height="24" aria-hidden="true">
+                  <use href="images/sprite.svg#icon-basket"></use>
+                </svg>
+                <span class="header__user-count">0</span>
               </button>
+              <!-- Basket -->
+              <div class="header__basket basket">
+                <ul class="basket__list"></ul>
+                <a class="basket__link btn" href="./checkout.html">Перейти к оформлению</a>
+                <div class="basket__empty-block">Корзина пока пуста</div>
+              </div>
             </li>
-            <li class="location__subitem">
-              <button class="location__sublink" type="button">
-                Санкт-Петербург
+            <li class="header__user-item">
+              <button class="header__user-btn" type="button">
+                <span class="header__user-text">Войти</span>
+                <svg class="header__user-icon" width="24" height="24" aria-hidden="true">
+                  <use href="images/sprite.svg#icon-user"></use>
+                </svg>
               </button>
             </li>
           </ul>
         </div>
-
-        <!-- User list -->
-        <ul class="header__user-list">
-          <li class="header__user-item">
-            <button class="header__user-btn" type="button">
-              <span class="header__user-text">Корзина</span>
-              <svg class="header__user-icon" width="24" height="24" aria-hidden="true">
-                <use href="images/sprite.svg#icon-basket"></use>
-              </svg>
-              <span class="header__user-count">0</span>
-            </button>
-
-            <!-- Basket -->
-            <div class="header__basket basket">
-              <ul class="basket__list">
-              </ul>
-              <a class="basket__link btn" href="./checkout.html">Перейти к оформлению</a>
-              <div class="basket__empty-block">Корзина пока пуста</div>
-            </div>
-          </li>
-          <li class="header__user-item">
-            <button class="header__user-btn" type="button">
-              <span class="header__user-text">Войти</span>
-              <svg class="header__user-icon" width="24" height="24" aria-hidden="true">
-                <use href="images/sprite.svg#icon-user"></use>
-              </svg>
-            </button>
-          </li>
-        </ul>
       </div>
 
       <!-- Header - bottom -->
@@ -118,7 +117,7 @@
           <div class="main-menu__heading">
             <h2 class="main-menu__title">Категории товаров</h2>
             <button class="main-menu__close" type="button">
-              <svg class="main-menu__icon" width="24" height="24" aria-hidden="true">
+              <svg class="main-menu__icon" width="24" height="24" aria-hidden="true" aria-label="Закрыть меню">
                 <use href="images/sprite.svg#icon-close"></use>
               </svg>
             </button>
@@ -307,10 +306,8 @@
               </select>
             </div>
             <!-- Карточки товаров -->
-            <ul class="catalog__list">
-            </ul>
-            <ol class="catalog__pagination">
-            </ol>
+            <ul class="catalog__list"></ul>
+            <ol class="catalog__pagination"></ol>
           </div>
         </div>
       </div>
@@ -324,12 +321,14 @@
 
           <!-- Навигация для слайдера -->
           <div class="day-products__navigation">
-            <button class="day-products__navigation-btn day-products__navigation-btn--prev" disabled type="button">
+            <button class="day-products__navigation-btn day-products__navigation-btn--prev" disabled type="button"
+              aria-label="Предыдущий товар">
               <svg width="41" height="9" aria-hidden="true">
                 <use href="images/sprite.svg#icon-arrow-prev"></use>
               </svg>
             </button>
-            <button class="day-products__navigation-btn day-products__navigation-btn--next" type="button">
+            <button class="day-products__navigation-btn day-products__navigation-btn--next" type="button"
+              aria-label="Следующий товарnpm run format">
               <svg width="41" height="9" aria-hidden="true">
                 <use href="images/sprite.svg#icon-arrow-next"></use>
               </svg>
@@ -339,8 +338,7 @@
 
         <!-- Слайдер -->
         <div class="day-products__slider swiper">
-          <ul class="day-products__list swiper-wrapper">
-          </ul>
+          <ul class="day-products__list swiper-wrapper"></ul>
         </div>
       </div>
     </section>
@@ -579,22 +577,28 @@
             <span class="footer__name">Присоединяйтесь к нам:</span>
             <ul class="footer__social-list">
               <li class="footer__social-item">
-                <a class="footer__social-link" href="https://dzen.ru/" target="_blank" rel="noopener noreferrer">Дзен</a>
+                <a class="footer__social-link" href="https://dzen.ru/" target="_blank"
+                  rel="noopener noreferrer">Дзен</a>
               </li>
               <li class="footer__social-item">
-                <a class="footer__social-link" href="https://ok.ru/" target="_blank" rel="noopener noreferrer">Одноклассники</a>
+                <a class="footer__social-link" href="https://ok.ru/" target="_blank"
+                  rel="noopener noreferrer">Одноклассники</a>
               </li>
               <li class="footer__social-item">
-                <a class="footer__social-link" href="https://www.pinterest.com/" target="_blank" rel="noopener noreferrer">Pinterest</a>
+                <a class="footer__social-link" href="https://www.pinterest.com/" target="_blank"
+                  rel="noopener noreferrer">Pinterest</a>
               </li>
               <li class="footer__social-item">
-                <a class="footer__social-link" href="https://vk.com/" target="_blank" rel="noopener noreferrer">Вконтакте</a>
+                <a class="footer__social-link" href="https://vk.com/" target="_blank"
+                  rel="noopener noreferrer">Вконтакте</a>
               </li>
             </ul>
           </div>
         </div>
         <div class="footer__info">
-          <button class="footer__btn btn" type="button">Свяжитесь с нами</button>
+          <button class="footer__btn btn" type="button">
+            Свяжитесь с нами
+          </button>
           <ul class="footer__cards">
             <li class="footer__card">
               <svg class="footer__icon" width="44" height="15" aria-hidden="true">

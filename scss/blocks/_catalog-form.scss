@@ -5,6 +5,14 @@
   position: sticky;
   top: 20px;
 
+  @media (max-width: $vp-tablet) {
+    position: static;
+  }
+
+  @media (max-width: $vp-mobile) {
+    gap: 22px;
+  }
+
   &__reset {
     border: 1px solid $color-solitude;
     padding: 15px;
@@ -20,6 +28,12 @@
     line-height: 25.2px;
     transition: opacity $transition;
     cursor: pointer;
+
+    @media (max-width: $vp-mobile) {
+      gap: 12px;
+      font-size: 16px;
+      line-height: 22px;
+    }
 
     &:hover,
     &:focus-visible {
@@ -39,6 +53,12 @@
     font-weight: 600;
     line-height: 26px;
     margin: 0 0 30px 0;
+
+    @media (max-width: $vp-mobile) {
+      margin-bottom: 18px;
+      font-size: 18px;
+      line-height: 24px;
+    }
   }
 
   &__list-col {
@@ -48,6 +68,15 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+
+    @media (max-width: $vp-tablet) {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    @media (max-width: $vp-mobile) {
+      grid-template-columns: 1fr;
+    }
   }
 
   &__list-row {

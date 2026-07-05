@@ -9,7 +9,6 @@
   top: 0;
   transition: opacity $transition 0.3s;
   z-index: 10;
-
   $root: &;
 
   &--active {
@@ -38,11 +37,18 @@
     display: flex;
     flex-direction: column;
     gap: 36px;
+    max-width: 100%;
     padding: 28px 28px 28px 40px;
     position: relative;
     transform: translateX(-100%);
     transition: transform $transition;
+    width: min(100%, 408px);
     z-index: 2;
+
+    @media (max-width: $vp-mobile) {
+      padding: 24px 20px;
+      width: min(100%, 360px);
+    }
   }
 
   &__heading {
@@ -76,9 +82,14 @@
     gap: 20px;
     list-style: none;
     margin: 0;
-    min-width: 340px;
+    min-width: 0;
     overflow-y: scroll;
     padding: 0;
+    width: 100%;
+
+    @media (max-width: $vp-mobile) {
+      width: 100%;
+    }
 
     &::-webkit-scrollbar {
       display: none;

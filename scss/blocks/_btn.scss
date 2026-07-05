@@ -20,6 +20,12 @@
     font-weight: 600;
     line-height: 25.2px;
     padding: 15px 12px;
+
+    @media (max-width: 479px) {
+      font-size: 16px;
+      line-height: 22.4px;
+      padding: 13px 12px;
+    }
   }
 
   &--icon {
