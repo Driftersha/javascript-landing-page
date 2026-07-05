@@ -18,8 +18,8 @@ export function initDayProductsSlider(products, onAddToBasket) {
 
   // Инициализация слайдера
   new Swiper('.day-products__slider', {
-    slidesPerView: 4,
-    spaceBetween: 40,
+    slidesPerView: 1,
+    spaceBetween: 16,
     navigation: {
       nextEl: '.day-products__navigation-btn--next',
       prevEl: '.day-products__navigation-btn--prev',
@@ -27,9 +27,8 @@ export function initDayProductsSlider(products, onAddToBasket) {
     watchOverflow: true,
     speed: 500,
     breakpoints: {
-      1024: { slidesPerView: 4 },
-      768: { slidesPerView: 2 },
-      480: { slidesPerView: 1 },
+      768: { slidesPerView: 2, spaceBetween: 24 },
+      1024: { slidesPerView: 4, spaceBetween: 40 },
     },
   });
 }

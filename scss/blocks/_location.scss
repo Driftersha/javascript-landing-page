@@ -1,6 +1,7 @@
 .location {
   align-items: center;
   display: flex;
+  min-width: 0;
   font-size: 14px;
   font-weight: 400;
   gap: 5px;
@@ -15,15 +16,22 @@
     border: none;
     display: flex;
     gap: 5px;
+    min-width: 0;
     padding: 0;
 
     &--active {
-      + #{$root}__sublist {
+      +#{$root}__sublist {
         opacity: 1;
         transform: translateY(0);
         pointer-events: all;
       }
     }
+  }
+
+  &__city-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   &__sublist {
@@ -62,6 +70,28 @@
     &:hover,
     &:focus-visible {
       color: $color-granny-smith-apple;
+    }
+  }
+
+  @media (max-width: $vp-tablet) {
+    width: 100%;
+  }
+
+  @media (max-width: $vp-mobile) {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    &__text {
+      display: none;
+    }
+
+    &__sublist {
+      left: 0;
+    }
+
+    &__city-name {
+      font-size: 12px;
+      line-height: 16.8px
     }
   }
 }

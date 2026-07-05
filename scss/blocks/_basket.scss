@@ -13,6 +13,7 @@
     opacity $transition,
     transform $transition;
   z-index: 10;
+  max-width: calc(100vw - 32px);
 
   &--active {
     opacity: 1;
@@ -47,6 +48,7 @@
     font-weight: 500;
     line-height: 16.8px;
     position: relative;
+    min-width: 0;
   }
 
   &--checkout {
@@ -72,6 +74,16 @@
     justify-content: center;
   }
 
+  &__name {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  &__price {
+    justify-self: end;
+    white-space: nowrap;
+  }
+
   &__img {
     align-items: flex-start;
     background-color: $color-white-smoke;
@@ -82,10 +94,20 @@
     width: 60px;
     overflow: hidden;
 
+    @media (max-width: 378px) {
+      height: auto;
+      width: auto;
+    }
+
     img {
       height: 60px;
       object-fit: contain;
       width: 60px;
+
+      @media (max-width: 378px) {
+        height: auto;
+        width: auto;
+      }
     }
   }
 
@@ -104,5 +126,95 @@
     border: 2px solid #ffffff;
     font-size: 12px;
     font-weight: 200;
+  }
+
+  @media (max-width: $vp-tablet) {
+    &--checkout {
+      .basket__list {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  @media (max-width: $vp-mobile) {
+    // left: 50%;
+    // right: auto;
+    // transform: translate(-50%, -20px);
+    width: calc(100vw - 32px);
+
+    &--active {
+      // transform: translate(-50%, 0);
+    }
+
+    &__empty-block {
+      min-width: 0;
+    }
+
+    &__item {
+      gap: 12px;
+      grid-template-columns: 60px minmax(0, 1fr) 73px 20px;
+    }
+
+    &--checkout {
+      width: 100%;
+      transform: none;
+    }
+  }
+
+  @media (max-width: 479px) {
+    padding: 12px;
+
+    &--checkout {
+      padding: 0;
+    }
+
+    &__list {
+      gap: 12px;
+    }
+
+    &__item {
+      gap: 10px;
+      grid-template-columns: 52px minmax(0, 1fr) 62px 20px;
+      font-size: 12px;
+      line-height: 15.6px;
+    }
+
+    &__img {
+      height: 52px;
+      width: 52px;
+
+      img {
+        height: 52px;
+        width: 52px;
+      }
+    }
+
+    &__quantity {
+      left: 40px;
+    }
+  }
+
+  @media (max-width: 367px) {
+    &__item {
+      grid-template-columns: 48px minmax(0, 1fr) 56px 18px;
+      gap: 8px;
+    }
+
+    &__img {
+      height: 48px;
+      width: 48px;
+
+      img {
+        height: 48px;
+        width: 48px;
+      }
+    }
+
+    &__quantity {
+      height: 18px;
+      left: 36px;
+      width: 18px;
+      font-size: 10px;
+    }
   }
 }

@@ -44,6 +44,17 @@
         border-color $transition,
         background-color $transition;
     }
+
+    @media (max-width: 479px) {
+      align-items: flex-start;
+      font-size: 14px;
+      line-height: 19.6px;
+
+      &::before {
+        top: 2px;
+        transform: none;
+      }
+    }
   }
 
   &__count {
@@ -56,5 +67,9 @@
     left: 4px;
     opacity: 0;
     transition: opacity $transition;
+
+    @media (max-width: 479px) {
+      top: 6px;
+    }
   }
 }
