@@ -15,7 +15,9 @@ export function initCityDropdown() {
   cityToggleBtn.setAttribute('aria-expanded', 'false');
   try {
     const saved = localStorage.getItem(CITY_STORAGE_KEY);
-    const allowed = [...cityOptions].find((option) => option.textContent.trim() === saved);
+    const allowed = [...cityOptions].find(
+      (option) => option.textContent.trim() === saved
+    );
     if (allowed) cityNameDisplay.textContent = saved;
   } catch (error) {
     console.warn('Не удалось прочитать выбранный город:', error);

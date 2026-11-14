@@ -62,7 +62,9 @@ export function initFilters(products, renderProducts) {
   );
   const resetBtn = document.querySelector('.catalog-form__reset');
 
-  const requestedCategory = new URLSearchParams(window.location.search).get('category');
+  const requestedCategory = new URLSearchParams(window.location.search).get(
+    'category'
+  );
   let selectedCategories = [];
   let onlyInStock = false;
 

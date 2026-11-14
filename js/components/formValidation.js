@@ -20,8 +20,16 @@ export function initFormValidation() {
   validation
     .addField('#name', [
       { rule: 'required', errorMessage: 'Введите ваше имя' },
-      { rule: 'minLength', value: 3, errorMessage: 'Минимальная длина — 3 символа' },
-      { rule: 'maxLength', value: 50, errorMessage: 'Максимальная длина — 50 символов' },
+      {
+        rule: 'minLength',
+        value: 3,
+        errorMessage: 'Минимальная длина — 3 символа',
+      },
+      {
+        rule: 'maxLength',
+        value: 50,
+        errorMessage: 'Максимальная длина — 50 символов',
+      },
     ])
     .addField('#email', [
       { rule: 'required', errorMessage: 'Введите вашу почту' },
@@ -47,7 +55,8 @@ export function initFormValidation() {
           showModal({
             iconId: 'icon-i',
             title: 'Демонстрационная форма',
-            message: 'Заявка не отправлена: сервер обработки обращений не подключён. Данные остались только в браузере.',
+            message:
+              'Заявка не отправлена: сервер обработки обращений не подключён. Данные остались только в браузере.',
           });
           return;
         }
@@ -77,7 +86,11 @@ export function initCheckoutValidation(basket) {
   validation
     .addField('#checkout-name', [
       { rule: 'required', errorMessage: 'Введите ваше имя' },
-      { rule: 'minLength', value: 3, errorMessage: 'Минимальная длина — 3 символа' },
+      {
+        rule: 'minLength',
+        value: 3,
+        errorMessage: 'Минимальная длина — 3 символа',
+      },
     ])
     .addField('#checkout-phone', [
       { rule: 'required', errorMessage: 'Введите номер телефона' },
@@ -121,7 +134,8 @@ export function initCheckoutValidation(basket) {
           showModal({
             iconId: 'icon-i',
             title: 'Демонстрация оформления',
-            message: 'Заказ не создан и никуда не отправлен. Корзина сохранена. Для реальных заказов необходимо подключить сервер.',
+            message:
+              'Заказ не создан и никуда не отправлен. Корзина сохранена. Для реальных заказов необходимо подключить сервер.',
           });
           return;
         }

@@ -45,7 +45,10 @@ export default class Basket {
 
       document.addEventListener('click', closeBasket);
       document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && this.basketElement.classList.contains('basket--active')) {
+        if (
+          event.key === 'Escape' &&
+          this.basketElement.classList.contains('basket--active')
+        ) {
           closeBasket();
           this.basketButton.focus();
         }

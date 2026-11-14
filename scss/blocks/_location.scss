@@ -20,7 +20,7 @@
     padding: 0;
 
     &--active {
-      +#{$root}__sublist {
+      + #{$root}__sublist {
         opacity: 1;
         transform: translateY(0);
         pointer-events: all;
@@ -91,7 +91,7 @@
 
     &__city-name {
       font-size: 12px;
-      line-height: 16.8px
+      line-height: 16.8px;
     }
   }
 }
