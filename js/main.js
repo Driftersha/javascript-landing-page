@@ -1,5 +1,6 @@
 // --- Импорты компонентов ---
 import Basket from './components/Basket.js';
+import { initPageEnhancements } from './components/pageEnhancements.js';
 import { initBurgerMenu } from './components/burgerMenu.js';
 import { initCityDropdown } from './components/cityDropdown.js';
 import { initAccordion } from './components/accordion.js';
@@ -14,6 +15,7 @@ initBurgerMenu();
 initCityDropdown();
 initAccordion();
 initFormValidation();
+initPageEnhancements();
 
 // --- Инициализация корзины (компонент, реализующий добавление и хранение товаров) ---
 const basketService = createBasketService();

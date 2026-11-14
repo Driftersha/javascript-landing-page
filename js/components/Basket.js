@@ -8,6 +8,7 @@ import {
   getSvgIcon,
 } from './domHelpers.js';
 import { formatPriceWithCurrency } from '../utils/priceFormatter.js';
+import { announceCartAddition } from './cartToast.js';
 
 export default class Basket {
   constructor(basketService) {
@@ -60,6 +61,10 @@ export default class Basket {
   addItem(product) {
     this.basketService.addItem(product);
     this.updateAll();
+    announceCartAddition(
+      product,
+      this.getItems().find((item) => item.id === product.id)?.quantity ?? 1
+    );
   }
 
   // Удаление товара из корзины
