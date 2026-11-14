@@ -2,10 +2,10 @@ export function initAccordion() {
   const buttons = document.querySelectorAll('.accordion__btn');
 
   buttons.forEach((button, index) => {
-    const content = button.nextElementSibling;
-    if (content?.classList.contains('accordion__content')) {
-      content.id ||= `accordion-panel-${index + 1}`;
-      button.setAttribute('aria-controls', content.id);
+    const panel = button.nextElementSibling;
+    if (panel?.classList.contains('accordion__content')) {
+      panel.id ||= `accordion-panel-${index + 1}`;
+      button.setAttribute('aria-controls', panel.id);
     }
     button.setAttribute('aria-expanded', 'false');
 
