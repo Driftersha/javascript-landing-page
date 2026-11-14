@@ -59,7 +59,7 @@ export default class Basket {
 
   // Добавление товара в корзину
   addItem(product) {
-    this.basketService.addItem(product);
+    if (!this.basketService.addItem(product)) return;
     this.updateAll();
     announceCartAddition(
       product,

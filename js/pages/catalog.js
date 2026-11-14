@@ -1,4 +1,3 @@
-import { getProducts } from '../api/productsApi.js';
 import { initFilters } from '../components/filters.js';
 import { setupPagination } from '../components/pagination.js';
 import { initDayProductsSlider } from '../components/slider.js';
@@ -11,14 +10,14 @@ const CATALOG_ERROR_TEXT = 'Не удалось загрузить товары.
 const CATALOG_EMPTY_CLASS = 'catalog__empty';
 const CATALOG_EMPTY_TEXT = 'По выбранным фильтрам товары не найдены';
 
-export async function initCatalogPage(basket) {
+export async function initCatalogPage(basket, productsRequest) {
   const dayProductsList = document.querySelector('.day-products__list');
   const catalogList = document.querySelector(CATALOG_LIST_SELECTOR);
 
   if (!dayProductsList && !catalogList) return;
 
   try {
-    const products = await getProducts();
+    const products = await productsRequest;
     const onAddToBasket = (product) => {
       basket.addItem(product);
     };

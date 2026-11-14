@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build:css": "sass --style=expanded --no-source-map --silence-deprecation=import scss/style.scss css/style.css",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"**/*.{html,scss,css,js,json}\"",
@@ -12,6 +13,7 @@
   },
   "devDependencies": {
     "eslint": "^9.28.0",
-    "prettier": "^3.5.3"
+    "prettier": "^3.5.3",
+    "sass": "1.108.2"
   }
 }

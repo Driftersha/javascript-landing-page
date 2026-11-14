@@ -31,6 +31,7 @@ httpbin.org удалён: данные покупателей не должны 
 ```bash
 npm ci
 npm run check
+npm run build:css
 npx serve .
 ```
 
@@ -49,10 +50,10 @@ HTML5, SCSS, ES Modules, Swiper, Tippy.js, JustValidate, ESLint, Prettier.
 - `privacy.html`, `personal-data.html` — справочные страницы, не юридические шаблоны.
 - `js/config.js` — конфигурация endpoints; по умолчанию `null`.
 - `js/services/submitRequest.js` — отправка только к явно настроенному API.
-- `js/services/basketService.js` и `basketStorage.js` — корзина.
+- `js/config/brand.js` — идентификатор бренда, название, локаль и валюта.
+- `js/services/basketService.js` и `basketStorage.js` — корзина. В хранилище бренда лежат версия схемы, ID и количество. Названия, фотографии и цены берутся из каталога.
 - `js/pages/` — логика страниц.
-- `scss/` — исходные стили; `css/style.css` — скомпилированные стили.
-- `css/template.css` — стили карточки товара и уведомлений.
+- `scss/style.scss` — точка входа SCSS. `npm run build:css` обновляет `css/style.css`, который подключают все страницы и проверяет CI.
 - `data/data.json` — локальные демонстрационные данные.
 
 ## Проверка
@@ -60,6 +61,8 @@ HTML5, SCSS, ES Modules, Swiper, Tippy.js, JustValidate, ESLint, Prettier.
 ```bash
 npm run lint
 npm run check
+npm test
+npm run build:css
 ```
 
 ## Кастомизация
