@@ -36,3 +36,38 @@
   .product-page__image { max-height: 320px; }
   .product-page { padding-top: 20px; padding-bottom: 40px; }
 }
+
+html { scroll-behavior: smooth; }
+.experience-hero { background: #111a29; color: #fff; overflow: hidden; }
+.experience-hero__inner { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; min-height: 550px; gap: 24px; }
+.experience-hero__inner > div:first-child { padding: 70px 0; }
+.experience-kicker { display: block; font-size: 12px; font-weight: 700; letter-spacing: .18em; color: #a3b8d9; }
+.experience-hero h1 { font-size: clamp(40px, 5.5vw, 78px); line-height: 1.06; letter-spacing: -.05em; margin: 28px 0; }
+.experience-hero h1 em { font-style: normal; color: #b9ccff; }
+.experience-hero p { max-width: 500px; font-size: 18px; line-height: 1.7; color: #d1d9e7; }
+.experience-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 25px; margin-top: 35px; }
+.experience-cta { background: #dce6ff; color: #121d2b; padding: 18px 25px; text-decoration: none; font-weight: 700; border-radius: 5px; transition: transform .25s, background .25s; }
+.experience-cta:hover { transform: translateY(-4px); background: #fff; }
+.experience-link { color: #fff; text-underline-offset: 6px; }
+.experience-art { min-height: 420px; display: grid; place-items: center; background: radial-gradient(ellipse at center, #455a77, #1a273a 65%, #111a29); }
+.experience-orb { display: block; width: min(65%, 290px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 32% 24%, #fff, #d9e2f5 22%, #8d9eb9 52%, #202c40 82%); box-shadow: 0 0 85px #d6e3ff33; animation: experience-float 7s ease-in-out infinite; }
+.experience-categories { padding: 80px 0; background: #f5f7fa; }
+.experience-categories .experience-kicker { color: #587098; }
+.experience-categories h2 { margin: 18px 0 35px; font-size: clamp(30px, 4vw, 50px); }
+.experience-category-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.experience-category-grid a { display: flex; min-height: 190px; flex-direction: column; justify-content: space-between; padding: 28px; background: linear-gradient(135deg, #293d56, #7389a6); color: #fff; text-decoration: none; border-radius: 8px; font-size: clamp(24px, 2.7vw, 35px); font-weight: 700; transition: transform .25s, box-shadow .25s; }
+.experience-category-grid a:nth-child(2) { background: linear-gradient(135deg, #35394b, #84849b); }
+.experience-category-grid a:nth-child(3) { background: linear-gradient(135deg, #345052, #799392); }
+.experience-category-grid a:hover { transform: translateY(-5px); box-shadow: 0 18px 30px #14203525; }
+.experience-category-grid a span { font-size: 14px; font-weight: 400; }
+.back-to-top { position: fixed; right: 20px; bottom: 20px; z-index: 95; width: 48px; height: 48px; border: 0; border-radius: 50%; background: #1c2c42; color: #fff; font-size: 25px; cursor: pointer; opacity: 0; visibility: hidden; transform: translateY(12px); transition: opacity .25s, transform .25s, visibility .25s; }
+.back-to-top--visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.cart-toast { position: fixed; z-index: 1100; right: 20px; bottom: 82px; width: min(370px, calc(100vw - 32px)); padding: 20px; display: flex; flex-direction: column; gap: 8px; background: #17253a; color: #fff; border-radius: 10px; box-shadow: 0 16px 45px #0004; opacity: 0; visibility: hidden; transform: translateY(12px); transition: opacity .25s, transform .25s, visibility .25s; }
+.cart-toast--visible { opacity: 1; visibility: visible; transform: translateY(0); }
+.cart-toast span { color: #dce4ef; font-size: 14px; }
+.cart-toast a { color: #bed5ff; font-weight: 700; }
+.product-card { transition: transform .25s ease; }
+.product-card:hover { transform: translateY(-4px); }
+@keyframes experience-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+@media (max-width: 800px) { .experience-hero__inner { grid-template-columns: 1fr; } .experience-hero__inner > div:first-child { padding: 55px 0 15px; } .experience-art { min-height: 260px; } .experience-orb { width: 175px; } .experience-category-grid { grid-template-columns: 1fr; } .experience-category-grid a { min-height: 140px; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
