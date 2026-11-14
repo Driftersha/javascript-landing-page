@@ -220,4 +220,16 @@
             stroke="#FC5A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
     </symbol>
 
+    <symbol id="icon-diagonal-arrow" viewBox="0 0 24 24" fill="none">
+        <path d="M5 19 19 5M7 5h12v12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
+    <symbol id="icon-up" viewBox="0 0 24 24" fill="none">
+        <path d="M12 20V4m-6 6 6-6 6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
+    <symbol id="icon-adjustments" viewBox="0 0 24 24" fill="none">
+        <path d="M4 7h5m4 0h7M4 17h10m4 0h2M9 4v6m5 4v6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+    </symbol>
+    <symbol id="icon-chevron" viewBox="0 0 24 24" fill="none">
+        <path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
 </svg>

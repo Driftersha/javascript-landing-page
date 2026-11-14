@@ -2,7 +2,6 @@ import {
   getDivEl,
   getImgEl,
   getSpanEl,
-  getH2El,
   getBtnEl,
   getUlEl,
   getLiEl,
@@ -10,12 +9,11 @@ import {
 } from './domHelpers.js';
 import { formatPrice } from '../utils/priceFormatter.js';
 
-// Константы для иконок и текстов
-const ICON_BASKET = 'images/sprite.svg#icon-basket';
-const ICON_TOOLTIP = 'images/sprite.svg#icon-i';
-const ADD_TO_CART_TEXT = 'В корзину';
-const MORE_DETAILS_TEXT = 'Подробнее';
-const TOOLTIP_TEXT = 'Наличие товара по городам:';
+const CITIES = {
+  moscow: 'Москва',
+  orenburg: 'Оренбург',
+  saintPetersburg: 'Санкт-Петербург',
+};
 
 export default class ProductCard {
   constructor(product, onAddToBasket) {
@@ -24,120 +22,92 @@ export default class ProductCard {
   }
 
   renderCard() {
+    const product = this.product;
+    const productUrl = `./product.html?id=${encodeURIComponent(product.id)}`;
     const card = getDivEl('product-card');
+    const visual = document.createElement('a');
+    visual.className = 'product-card__visual';
+    visual.href = productUrl;
+    visual.tabIndex = -1;
+    visual.setAttribute('aria-label', `Подробнее: ${product.name}`);
+    const image = getImgEl(product.image);
+    image.loading = 'lazy';
+    image.decoding = 'async';
+    visual.append(image);
 
-    // Визуальная часть с картинкой и кнопками
-    const visualContainer = getDivEl('product-card__visual');
-    const img = getImgEl(this.product.image, this.product.name);
-    visualContainer.appendChild(img);
+    const info = getDivEl('product-card__info');
+    const title = document.createElement('h3');
+    title.className = 'product-card__title';
+    const titleLink = document.createElement('a');
+    titleLink.href = productUrl;
+    titleLink.textContent = product.name;
+    title.append(titleLink);
 
-    const moreInfoContainer = getDivEl('product-card__more');
-    const addToCartBtn = getBtnEl(
-      'Добавить в корзину',
-      'button',
-      'product-card__btn btn btn--icon'
-    );
-    const cartIcon = getSvgIcon(ICON_BASKET, 'btn__text', 24, 24);
-    const cartText = getSpanEl(ADD_TO_CART_TEXT, 'btn__text');
-    addToCartBtn.append(cartIcon, cartText);
-
-    const moreDetailsBtn = document.createElement('a');
-    moreDetailsBtn.className = 'product-card__btn btn btn--secondary';
-    moreDetailsBtn.href = `./product.html?id=${encodeURIComponent(this.product.id)}`;
-    moreDetailsBtn.append(getSpanEl(MORE_DETAILS_TEXT, 'btn__text'));
-
-    const stock = Object.values(this.product.availability ?? {}).reduce(
-      (sum, count) => sum + count,
-      0
-    );
-    if (stock <= 0) {
-      addToCartBtn.disabled = true;
-      addToCartBtn.setAttribute('aria-label', 'Товара нет в наличии');
-      cartText.textContent = 'Нет в наличии';
-    }
-
-    addToCartBtn.addEventListener('click', (event) => {
-      event.preventDefault();
-      this.addToBasket();
-    });
-
-    moreInfoContainer.append(addToCartBtn, moreDetailsBtn);
-    visualContainer.appendChild(moreInfoContainer);
-
-    const infoContainer = getDivEl('product-card__info');
-    const title = getH2El(this.product.name);
-
-    const formattedOldPrice = formatPrice(this.product.price.old);
-    const formattedNewPrice = formatPrice(this.product.price.new);
-
-    const oldPrice = this.createPriceBlock(
-      formattedOldPrice,
-      'product-card__old'
-    );
-    const newPrice = this.createPriceBlock(
-      formattedNewPrice,
+    const prices = getDivEl('product-card__prices');
+    const oldPrice = document.createElement('del');
+    oldPrice.className = 'product-card__old';
+    oldPrice.textContent = `${formatPrice(product.price.old)}\u00a0₽`;
+    const price = getSpanEl(
+      `${formatPrice(product.price.new)}\u00a0₽`,
       'product-card__price'
     );
+    prices.append(price, oldPrice);
 
-    infoContainer.append(title, oldPrice, newPrice);
-
-    // Tooltip
-    const tooltip = getDivEl('product-card__tooltip tooltip');
-    const tooltipButton = getBtnEl('Показать подсказку');
-    const tooltipIcon = getSvgIcon(ICON_TOOLTIP, 'tooltip__icon', 5, 10);
-    tooltipButton.append(tooltipIcon);
-
-    const tooltipContent = getDivEl('tooltip__content');
-    const tooltipText = getSpanEl(TOOLTIP_TEXT, 'tooltip__text');
-    const tooltipList = getUlEl('tooltip__list');
-
-    const availability = this.product.availability || {};
-    const cities = [
-      { name: 'Москва', count: availability.moscow ?? 0 },
-      { name: 'Оренбург', count: availability.orenburg ?? 0 },
-      { name: 'Санкт-Петербург', count: availability.saintPetersburg ?? 0 },
-    ];
-
-    cities.forEach((city) => {
-      const listItem = getLiEl('tooltip__item');
-      const cityNameEl = getSpanEl(city.name, 'tooltip__text');
-      const cityCountEl = getSpanEl(city.count, 'tooltip__count');
-      listItem.append(cityNameEl, cityCountEl);
-      tooltipList.appendChild(listItem);
-    });
-
-    tooltipContent.append(tooltipText, tooltipList);
-    tooltip.appendChild(tooltipButton);
-    infoContainer.appendChild(tooltip);
-
-    // Инициализация тултипа, если доступна библиотека
-    if (tooltipButton && typeof tippy === 'function') {
-      tippy(tooltipButton, {
-        content: tooltipContent.innerHTML,
-        allowHTML: true,
-        theme: 'lightwhite',
-        placement: 'top-end',
-        arrow: false,
-      });
+    const available = Object.values(product.availability ?? {}).some(
+      (count) => count > 0
+    );
+    const addButton = getBtnEl(
+      available ? `В корзину: ${product.name}` : 'Нет в наличии',
+      'button',
+      'product-card__btn btn',
+      available ? 'В корзину' : 'Нет в наличии'
+    );
+    addButton.disabled = !available;
+    if (available) {
+      addButton.prepend(
+        getSvgIcon('images/sprite.svg#icon-basket', '', 16, 16)
+      );
+      addButton.addEventListener('click', () => this.onAddToBasket?.(product));
     }
 
-    card.append(visualContainer, infoContainer);
+    const stockButton = this.createStockButton();
+    if (stockButton) prices.append(stockButton);
+    info.append(title, prices, addButton);
+    card.append(visual, info);
     return card;
   }
 
-  createPriceBlock(price, className) {
-    const block = getDivEl(className);
-    const number = getSpanEl(price, `${className}-number`);
-    const add = getSpanEl('₽', `${className}-add`);
-    block.append(number, add);
-    return block;
-  }
+  createStockButton() {
+    if (typeof tippy !== 'function') return null;
 
-  addToBasket() {
-    if (typeof this.onAddToBasket === 'function') {
-      this.onAddToBasket(this.product);
-    } else {
-      console.error('Обработчик добавления в корзину не передан');
-    }
+    const button = getBtnEl(
+      'Наличие по городам',
+      'button',
+      'product-card__stock'
+    );
+    button.append(getSvgIcon('images/sprite.svg#icon-i', '', 5, 10));
+    const content = getDivEl('product-stock-content');
+    const text = getSpanEl('Наличие по городам', 'tooltip__text');
+    const list = getUlEl('tooltip__list');
+
+    Object.entries(CITIES).forEach(([key, city]) => {
+      const item = getLiEl('tooltip__item');
+      item.append(
+        getSpanEl(city, 'tooltip__text'),
+        getSpanEl(this.product.availability?.[key] ?? 0, 'tooltip__count')
+      );
+      list.append(item);
+    });
+
+    content.append(text, list);
+    tippy(button, {
+      content,
+      theme: 'lightwhite',
+      placement: 'top-end',
+      arrow: false,
+      trigger: 'mouseenter focus click',
+      appendTo: document.body,
+    });
+    return button;
   }
 }

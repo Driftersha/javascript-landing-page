@@ -3,7 +3,10 @@ import ProductCard from './ProductCard.js';
 
 // Функция рендера карточек на текущей странице
 function renderPage(page, products, container, itemsPerPage, onAddToBasket) {
-  container.innerHTML = '';
+  container.querySelectorAll('.product-card__stock').forEach((button) => {
+    button._tippy?.destroy();
+  });
+  container.replaceChildren();
 
   const start = (page - 1) * itemsPerPage;
   const end = page * itemsPerPage;
@@ -11,7 +14,9 @@ function renderPage(page, products, container, itemsPerPage, onAddToBasket) {
 
   visible.forEach((product) => {
     const card = new ProductCard(product, onAddToBasket);
-    container.appendChild(card.renderCard());
+    const item = getLiEl('catalog__item');
+    item.append(card.renderCard());
+    container.append(item);
   });
 }
 
@@ -89,6 +94,8 @@ export function setupPagination(
       (page) => {
         currentPage = page;
         render(pageProducts);
+        container.focus({ preventScroll: true });
+        container.scrollIntoView({ block: 'start' });
       }
     );
   }
