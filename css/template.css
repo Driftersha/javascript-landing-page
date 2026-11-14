@@ -76,6 +76,16 @@ a {
   border-bottom-color: var(--line);
 }
 
+.header__logo-link > svg {
+  display: block;
+  width: 146px;
+  height: 32px;
+}
+
+.footer__logo-link > svg {
+  display: block;
+}
+
 .header__catalog-btn {
   border-color: var(--line);
   color: var(--ink);
@@ -1034,9 +1044,9 @@ a {
     margin-right: auto;
   }
 
-  .storefront .header__logo-link svg {
-    width: 106px;
-    height: 20px;
+  .storefront .header__logo-link > svg {
+    width: 120px;
+    height: 27px;
   }
 
   .storefront .header__catalog-btn {
