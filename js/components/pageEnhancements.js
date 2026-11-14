@@ -9,7 +9,9 @@ export function initPageEnhancements() {
   const update = () => {
     button.classList.toggle('back-to-top--visible', window.scrollY > 420);
   };
-  button.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  button.addEventListener('click', () =>
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  );
   window.addEventListener('scroll', update, { passive: true });
   update();
 }

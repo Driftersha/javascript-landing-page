@@ -22,5 +22,8 @@ export function announceCartAddition(product, quantity) {
   toast.append(title, details, link);
   toast.classList.add('cart-toast--visible');
   clearTimeout(timeoutId);
-  timeoutId = setTimeout(() => toast.classList.remove('cart-toast--visible'), 5500);
+  timeoutId = setTimeout(
+    () => toast.classList.remove('cart-toast--visible'),
+    5500
+  );
 }

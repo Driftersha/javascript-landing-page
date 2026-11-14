@@ -61,7 +61,10 @@ export default class Basket {
   addItem(product) {
     this.basketService.addItem(product);
     this.updateAll();
-    announceCartAddition(product, this.getItems().find((item) => item.id === product.id)?.quantity ?? 1);
+    announceCartAddition(
+      product,
+      this.getItems().find((item) => item.id === product.id)?.quantity ?? 1
+    );
   }
 
   // Удаление товара из корзины
