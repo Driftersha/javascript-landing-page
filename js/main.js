@@ -7,6 +7,7 @@ import { initFormValidation } from './components/formValidation.js';
 import { initGlobalRipple } from './components/ripple.js';
 import { initCatalogPage } from './pages/catalog.js';
 import { initCheckoutPage } from './pages/checkout.js';
+import { initProductPage } from './pages/product.js';
 import { createBasketService } from './services/basketService.js';
 
 // Инициализация ripple-эффекта по клику в любом месте страницы
@@ -25,3 +26,5 @@ const basket = new Basket(basketService);
 // --- Инициализация страниц ---
 initCatalogPage(basket);
 initCheckoutPage(basket);
+
+initProductPage(basket);
