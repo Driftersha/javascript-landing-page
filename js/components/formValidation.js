@@ -15,6 +15,8 @@ export function initFormValidation() {
   if (!form) return;
 
   const validation = new JustValidate(form);
+  const submitControl = form.querySelector('[type="submit"]');
+  if (submitControl) submitControl.disabled = false;
   validation
     .addField('#name', [
       { rule: 'required', errorMessage: 'Введите ваше имя' },
@@ -70,6 +72,8 @@ export function initCheckoutValidation(basket) {
   if (!form) return;
 
   const validation = new JustValidate(form);
+  const submitControl = form.querySelector('[type="submit"]');
+  if (submitControl) submitControl.disabled = false;
   validation
     .addField('#checkout-name', [
       { rule: 'required', errorMessage: 'Введите ваше имя' },
