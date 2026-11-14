@@ -17,6 +17,8 @@ export default [
         console: 'readonly',
         document: 'readonly',
         Element: 'readonly',
+        HTMLElement: 'readonly',
+        URLSearchParams: 'readonly',
         fetch: 'readonly',
         FormData: 'readonly',
         localStorage: 'readonly',

@@ -37,13 +37,16 @@ function renderPagination(
     const li = getLiEl('catalog__pagination-item');
 
     const btn = getBtnEl(
-      'Переключить страницу',
+      `Страница ${i}`,
       'button',
       'catalog__pagination-link',
       i
     );
 
-    if (i === currentPage) btn.classList.add('active');
+    if (i === currentPage) {
+      btn.classList.add('active');
+      btn.setAttribute('aria-current', 'page');
+    }
 
     btn.addEventListener('click', () => {
       onPageChange(i);

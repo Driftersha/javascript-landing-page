@@ -5,5 +5,10 @@ export async function getProducts() {
     throw new Error(`Ошибка загрузки товаров: ${response.status}`);
   }
 
-  return response.json();
+  const products = await response.json();
+  if (!Array.isArray(products)) {
+    throw new Error('Некорректный формат каталога');
+  }
+
+  return products;
 }

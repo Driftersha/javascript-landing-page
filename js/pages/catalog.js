@@ -50,6 +50,8 @@ function initCatalog(products, onAddToBasket) {
     renderCatalog(getSortedProducts(filteredProducts), { resetPage: true });
   });
 
+  renderCatalog(getSortedProducts(filteredProducts), { resetPage: true });
+
   const sortSelect = document.querySelector('.catalog__sort-select');
   if (sortSelect) {
     sortSelect.addEventListener('change', () => {

@@ -24,17 +24,34 @@ export default class Basket {
 
     // Обработчик для кнопки открытия/закрытия корзины
     if (this.basketButton && this.basketElement) {
+      this.basketElement.id ||= 'header-basket';
+      this.basketButton.setAttribute('aria-controls', this.basketElement.id);
+      this.basketButton.setAttribute('aria-expanded', 'false');
+
+      const closeBasket = () => {
+        this.basketElement.classList.remove('basket--active');
+        this.basketButton.setAttribute('aria-expanded', 'false');
+      };
+
       this.basketButton.addEventListener('click', (event) => {
         event.stopPropagation();
-        this.basketElement.classList.toggle('basket--active');
+        const open = this.basketElement.classList.toggle('basket--active');
+        this.basketButton.setAttribute('aria-expanded', String(open));
       });
 
       this.basketElement.addEventListener('click', (event) => {
         event.stopPropagation();
       });
 
-      document.addEventListener('click', () => {
-        this.basketElement.classList.remove('basket--active');
+      document.addEventListener('click', closeBasket);
+      document.addEventListener('keydown', (event) => {
+        if (
+          event.key === 'Escape' &&
+          this.basketElement.classList.contains('basket--active')
+        ) {
+          closeBasket();
+          this.basketButton.focus();
+        }
       });
     }
   }

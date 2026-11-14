@@ -5,10 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="css/style.css" />
-    <title>Каталог товаров - Briaton</title>
+    <link rel="stylesheet" href="css/template.css" />
+    <meta
+      name="description"
+      content="Демонстрационная страница оформления заказа магазина Briaton. Реальная отправка заказов не подключена."
+    />
+    <title>Оформление заказа — Briaton (демо)</title>
   </head>
 
   <body>
+    <div class="container">
+      <p class="template-notice" role="note">
+        Учебный демо-проект. Цены и товары приведены для демонстрации
+        интерфейса, покупка и отправка заявок не работают.
+      </p>
+    </div>
     <header class="header">
       <div class="container">
         <!-- Header - top -->
@@ -70,21 +81,7 @@
           </div>
 
           <!-- User list -->
-          <ul class="header__user-list">
-            <li class="header__user-item">
-              <button class="header__user-btn" type="button">
-                <span class="header__user-text">Войти</span>
-                <svg
-                  class="header__user-icon"
-                  width="24"
-                  height="24"
-                  aria-hidden="true"
-                >
-                  <use href="images/sprite.svg#icon-user"></use>
-                </svg>
-              </button>
-            </li>
-          </ul>
+          <ul class="header__user-list"></ul>
         </div>
 
         <!-- Header - bottom -->
@@ -113,12 +110,10 @@
             </li>
           </ul>
           <div class="header__contacts">
-            <a href="tel:+78002220037" class="header__phone"
-              >+7 (800) 222-00-37</a
+            <span class="header__phone">Контакты — демо</span>
+            <a class="header__btn btn" href="./index.html#questions"
+              >Задать вопрос</a
             >
-            <button class="header__btn btn" type="button">
-              Обратный звонок
-            </button>
           </div>
         </div>
 
@@ -141,73 +136,38 @@
             </div>
             <ul class="main-menu__list">
               <li class="main-menu__item">
-                <a class="main-menu__link" href="./index.html#catalog"
-                  >Люстры</a
+                <a
+                  class="main-menu__link"
+                  href="./index.html?category=pendant#catalog"
+                  >Подвесные светильники</a
                 >
               </li>
               <li class="main-menu__item">
                 <a
-                  class="main-menu__link main-menu__link--active"
-                  href="./index.html#catalog"
-                  >Светильники</a
+                  class="main-menu__link"
+                  href="./index.html?category=ceiling#catalog"
+                  >Потолочные светильники</a
                 >
               </li>
               <li class="main-menu__item">
-                <a class="main-menu__link" href="./index.html#catalog"
-                  >Бра и подсветки</a
+                <a
+                  class="main-menu__link"
+                  href="./index.html?category=overhead#catalog"
+                  >Накладные светильники</a
                 >
               </li>
               <li class="main-menu__item">
-                <a class="main-menu__link" href="./index.html#catalog">Споты</a>
-              </li>
-              <li class="main-menu__item">
-                <a class="main-menu__link" href="./index.html#catalog"
-                  >Настольные лампы</a
+                <a
+                  class="main-menu__link"
+                  href="./index.html?category=point#catalog"
+                  >Точечные светильники</a
                 >
               </li>
               <li class="main-menu__item">
-                <a class="main-menu__link" href="./index.html#catalog"
-                  >Торшеры</a
-                >
-              </li>
-              <li class="main-menu__item">
-                <a class="main-menu__link" href="./index.html#catalog"
-                  >Трековые системы</a
-                >
-              </li>
-              <li class="main-menu__item">
-                <a class="main-menu__link" href="./index.html#catalog"
-                  >Уличное освещение</a
-                >
-              </li>
-              <li class="main-menu__item">
-                <a class="main-menu__link" href="./index.html#catalog"
-                  >Офисное освещение</a
-                >
-              </li>
-              <li class="main-menu__item">
-                <a class="main-menu__link" href="./index.html#catalog"
-                  >Лампочки</a
-                >
-              </li>
-              <li class="main-menu__item">
-                <a class="main-menu__link" href="./index.html#catalog"
-                  >Светодиодная подсветка</a
-                >
-              </li>
-              <li class="main-menu__item">
-                <a class="main-menu__link" href="./index.html#catalog"
-                  >Предметы интерьера</a
-                >
-              </li>
-              <li class="main-menu__item">
-                <a class="main-menu__link" href="./index.html#catalog"
-                  >Электротовары</a
-                >
-              </li>
-              <li class="main-menu__item">
-                <a class="main-menu__link" href="./index.html#catalog"
-                  >Комплектующие</a
+                <a
+                  class="main-menu__link"
+                  href="./index.html?category=nightlights#catalog"
+                  >Ночники</a
                 >
               </li>
             </ul>
@@ -241,6 +201,10 @@
       <section class="checkout">
         <div class="container">
           <h1 class="checkout__title">Оформление заказа</h1>
+          <p class="template-notice" role="note">
+            Демо-версия: заказ не будет отправлен или оплачен. Сервер магазина
+            не подключён.
+          </p>
 
           <div class="checkout__products basket basket--checkout">
             <ul class="basket__list"></ul>
@@ -251,7 +215,7 @@
             <span class="checkout__total-price"></span>
           </div>
 
-          <form class="checkout-form">
+          <form class="checkout-form" action="#" method="POST">
             <div class="checkout__inner">
               <div class="custom-input">
                 <label for="checkout-name" class="custom-input__label"
@@ -293,8 +257,8 @@
                   autocomplete="street-address"
                 />
               </div>
-              <button class="checkout__btn btn btn--big" type="submit">
-                Отправить заказ
+              <button class="checkout__btn btn btn--big" type="submit" disabled>
+                Проверить оформление (демо)
               </button>
               <div class="custom-checkbox">
                 <input
@@ -342,67 +306,20 @@
               <div class="footer__contact">
                 <span class="footer__name">Адрес:</span>
                 <span class="footer__contact-link"
-                  >г. Москва, Нижний проезд, 25/3</span
+                  >Демонстрационный адрес не указан</span
                 >
               </div>
               <div class="footer__contact">
                 <span class="footer__name">Контакты:</span>
-                <a
-                  class="footer__contact-link"
-                  href="mailto:infobriaton@group.ru"
-                  >infobriaton@group.ru</a
-                >
-                <a class="footer__contact-link" href="tel:+78002220037"
-                  >+7 (800) 222-00-37</a
-                >
+                <span class="footer__contact-link">Почта не подключена</span>
+                <span class="footer__contact-link">Телефон не подключён</span>
               </div>
-            </div>
-            <div class="footer__social">
-              <span class="footer__name">Присоединяйтесь к нам:</span>
-              <ul class="footer__social-list">
-                <li class="footer__social-item">
-                  <a
-                    class="footer__social-link"
-                    href="https://dzen.ru/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Дзен</a
-                  >
-                </li>
-                <li class="footer__social-item">
-                  <a
-                    class="footer__social-link"
-                    href="https://ok.ru/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Одноклассники</a
-                  >
-                </li>
-                <li class="footer__social-item">
-                  <a
-                    class="footer__social-link"
-                    href="https://www.pinterest.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Pinterest</a
-                  >
-                </li>
-                <li class="footer__social-item">
-                  <a
-                    class="footer__social-link"
-                    href="https://vk.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >Вконтакте</a
-                  >
-                </li>
-              </ul>
             </div>
           </div>
           <div class="footer__info">
-            <button class="footer__btn btn" type="button">
-              Свяжитесь с нами
-            </button>
+            <a class="footer__btn btn" href="./index.html#questions"
+              >Свяжитесь с нами</a
+            >
             <ul class="footer__cards">
               <li class="footer__card">
                 <svg
@@ -447,7 +364,7 @@
               >Политика конфиденциальности</a
             >
           </div>
-          <span class="footer__copyright">© ООО "Бриатон"</span>
+          <span class="footer__copyright">© Учебный шаблон Briaton</span>
           <a class="footer__develop" href="https://affarts.ru/">
             <span class="footer__develop-text">Дизайн сделан в</span>
             <svg

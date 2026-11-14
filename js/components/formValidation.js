@@ -1,26 +1,34 @@
+import { API_ENDPOINTS } from '../config.js';
+import { submitRequest } from '../services/submitRequest.js';
 import { showModal } from './modal.js';
-import { clearBasketItems } from '../services/basketStorage.js';
+
+function showSubmissionError() {
+  showModal({
+    iconId: 'icon-warning',
+    title: 'Не удалось отправить данные',
+    message: 'Пожалуйста, попробуйте позже или свяжитесь с магазином.',
+  });
+}
 
 export function initFormValidation() {
   const form = document.querySelector('.questions__form');
-
   if (!form) return;
 
   const validation = new JustValidate(form);
-
-  // Настраиваем правила валидации для каждого поля
+  const submitControl = form.querySelector('[type="submit"]');
+  if (submitControl) submitControl.disabled = false;
   validation
     .addField('#name', [
       { rule: 'required', errorMessage: 'Введите ваше имя' },
       {
         rule: 'minLength',
         value: 3,
-        errorMessage: 'Минимальная длина три символа',
+        errorMessage: 'Минимальная длина — 3 символа',
       },
       {
         rule: 'maxLength',
-        value: 20,
-        errorMessage: 'Максимальная длина двадцать символов',
+        value: 50,
+        errorMessage: 'Максимальная длина — 50 символов',
       },
     ])
     .addField('#email', [
@@ -32,72 +40,56 @@ export function initFormValidation() {
     ])
     .onSuccess(async (event) => {
       event.preventDefault();
-
-      const formData = {
-        name: form.querySelector('#name').value.trim(),
-        email: form.querySelector('#email').value.trim(),
-        agree: form.querySelector('#agree').checked,
-      };
-
-      const serverUrl = form.action;
+      const submitButton = form.querySelector('[type="submit"]');
+      if (submitButton?.disabled) return;
+      if (submitButton) submitButton.disabled = true;
 
       try {
-        const url = new URL(serverUrl);
-        if (!url.hostname) {
-          throw new Error('Некорректный адрес сервера');
-        }
-
-        const response = await fetch(serverUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData),
+        const result = await submitRequest(API_ENDPOINTS.consultation, {
+          name: form.querySelector('#name').value.trim(),
+          email: form.querySelector('#email').value.trim(),
+          agree: form.querySelector('#agree').checked,
         });
 
-        if (!response.ok) {
-          throw new Error(
-            `Ошибка сервера: ${
-              response.status === 0
-                ? 'нет ответа от сервера'
-                : response.statusText
-            }`
-          );
+        if (result.demo) {
+          showModal({
+            iconId: 'icon-i',
+            title: 'Демонстрационная форма',
+            message:
+              'Заявка не отправлена: сервер обработки обращений не подключён. Данные остались только в браузере.',
+          });
+          return;
         }
 
-        // Показываем модальное окно при успешной отправке
         showModal({
           iconId: 'icon-completed',
-          title: 'Благодарим за обращение!',
-          message:
-            'Мы получили вашу заявку и свяжемся с вами в ближайшее время',
+          title: 'Обращение отправлено',
+          message: 'Мы получили ваше обращение.',
         });
         form.reset();
       } catch (error) {
-        console.error('Ошибка при отправке формы:', error);
-
-        showModal({
-          iconId: 'icon-warning',
-          title: 'Не удалось отправить обращение',
-          message:
-            'Что-то пошло не так, попробуйте отправить форму ещё раз. Если ошибка повторится — свяжитесь со службой поддержки.',
-        });
+        console.error('Ошибка отправки обращения:', error);
+        showSubmissionError();
+      } finally {
+        if (submitButton) submitButton.disabled = false;
       }
     });
 }
 
 export function initCheckoutValidation(basket) {
   const form = document.querySelector('.checkout-form');
-
   if (!form) return;
 
   const validation = new JustValidate(form);
-
+  const submitControl = form.querySelector('[type="submit"]');
+  if (submitControl) submitControl.disabled = false;
   validation
     .addField('#checkout-name', [
       { rule: 'required', errorMessage: 'Введите ваше имя' },
       {
         rule: 'minLength',
         value: 3,
-        errorMessage: 'Минимальная длина три символа',
+        errorMessage: 'Минимальная длина — 3 символа',
       },
     ])
     .addField('#checkout-phone', [
@@ -109,22 +101,57 @@ export function initCheckoutValidation(basket) {
     .addField('#checkout-agree', [
       { rule: 'required', errorMessage: 'Согласие обязательно' },
     ])
-    .onSuccess((event) => {
+    .onSuccess(async (event) => {
       event.preventDefault();
+      const items = basket?.getItems() ?? [];
+      if (!items.length) {
+        showModal({
+          iconId: 'icon-warning',
+          title: 'Корзина пуста',
+          message: 'Добавьте товары перед оформлением заказа.',
+        });
+        return;
+      }
 
-      showModal({
-        iconId: 'icon-completed',
-        title: 'Заказ оформлен',
-        message:
-          'Ваш заказ успешно оформлен. Мы свяжемся с вами в ближайшее время.',
-      });
+      const submitButton = form.querySelector('[type="submit"]');
+      if (submitButton?.disabled) return;
+      if (submitButton) submitButton.disabled = true;
 
-      form.reset();
+      try {
+        const result = await submitRequest(API_ENDPOINTS.orders, {
+          customer: {
+            name: form.querySelector('#checkout-name').value.trim(),
+            phone: form.querySelector('#checkout-phone').value.trim(),
+            address: form.querySelector('#checkout-address').value.trim(),
+          },
+          items: items.map((item) => ({
+            id: item.id,
+            quantity: item.quantity,
+          })),
+        });
 
-      if (basket && typeof basket.clear === 'function') {
+        if (result.demo) {
+          showModal({
+            iconId: 'icon-i',
+            title: 'Демонстрация оформления',
+            message:
+              'Заказ не создан и никуда не отправлен. Корзина сохранена. Для реальных заказов необходимо подключить сервер.',
+          });
+          return;
+        }
+
+        showModal({
+          iconId: 'icon-completed',
+          title: 'Заказ отправлен',
+          message: 'Заказ принят системой для дальнейшей обработки.',
+        });
+        form.reset();
         basket.clear();
-      } else {
-        clearBasketItems();
+      } catch (error) {
+        console.error('Ошибка оформления заказа:', error);
+        showSubmissionError();
+      } finally {
+        if (submitButton) submitButton.disabled = false;
       }
     });
 }

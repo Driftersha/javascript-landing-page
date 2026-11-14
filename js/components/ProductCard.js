@@ -41,12 +41,20 @@ export default class ProductCard {
     const cartText = getSpanEl(ADD_TO_CART_TEXT, 'btn__text');
     addToCartBtn.append(cartIcon, cartText);
 
-    const moreDetailsBtn = getBtnEl(
-      'Подробнее',
-      'button',
-      'product-card__btn btn btn--secondary'
-    );
+    const moreDetailsBtn = document.createElement('a');
+    moreDetailsBtn.className = 'product-card__btn btn btn--secondary';
+    moreDetailsBtn.href = `./product.html?id=${encodeURIComponent(this.product.id)}`;
     moreDetailsBtn.append(getSpanEl(MORE_DETAILS_TEXT, 'btn__text'));
+
+    const stock = Object.values(this.product.availability ?? {}).reduce(
+      (sum, count) => sum + count,
+      0
+    );
+    if (stock <= 0) {
+      addToCartBtn.disabled = true;
+      addToCartBtn.setAttribute('aria-label', 'Товара нет в наличии');
+      cartText.textContent = 'Нет в наличии';
+    }
 
     addToCartBtn.addEventListener('click', (event) => {
       event.preventDefault();

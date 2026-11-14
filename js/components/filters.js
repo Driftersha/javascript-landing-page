@@ -62,8 +62,19 @@ export function initFilters(products, renderProducts) {
   );
   const resetBtn = document.querySelector('.catalog-form__reset');
 
+  const requestedCategory = new URLSearchParams(window.location.search).get(
+    'category'
+  );
   let selectedCategories = [];
   let onlyInStock = false;
+
+  const selectedCheckbox = [...checkboxes].find(
+    (checkbox) => checkbox.value === requestedCategory
+  );
+  if (selectedCheckbox) {
+    selectedCheckbox.checked = true;
+    selectedCategories = [selectedCheckbox.value];
+  }
 
   function applyFilters() {
     const result = filterProducts(products, selectedCategories, onlyInStock);
@@ -101,4 +112,6 @@ export function initFilters(products, renderProducts) {
   if (radioInStock) radioInStock.addEventListener('change', handleStockChange);
   if (radioAll) radioAll.addEventListener('change', handleStockChange);
   if (resetBtn) resetBtn.addEventListener('click', resetFilters);
+
+  if (selectedCheckbox) applyFilters();
 }
