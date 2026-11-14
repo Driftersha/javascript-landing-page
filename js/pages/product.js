@@ -84,7 +84,10 @@ export async function initProductPage(basket) {
       button.textContent = 'Добавлено в корзину';
     });
     info.append(button);
-    container.append(image, info);
+    const visual = document.createElement('div');
+    visual.className = 'product-page__visual';
+    visual.append(image);
+    container.append(visual, info);
   } catch (error) {
     console.error('Ошибка загрузки товара:', error);
     container.append(

@@ -38,6 +38,26 @@ export async function initCatalogPage(basket) {
 
 function initCatalog(products, onAddToBasket) {
   let filteredProducts = [...products];
+  const filterToggle = document.querySelector('.catalog__filter-toggle');
+  const filterCount = document.querySelector('.catalog__filter-count');
+  const filterForm = document.querySelector('.catalog-form');
+  const catalogCount = document.querySelector('.catalog__count');
+
+  filterToggle?.addEventListener('click', () => {
+    const expanded = filterToggle.getAttribute('aria-expanded') === 'true';
+    filterToggle.setAttribute('aria-expanded', String(!expanded));
+  });
+
+  filterForm?.addEventListener('keydown', (event) => {
+    if (
+      event.key === 'Escape' &&
+      filterToggle?.getAttribute('aria-expanded') === 'true' &&
+      filterToggle.getClientRects().length
+    ) {
+      filterToggle.setAttribute('aria-expanded', 'false');
+      filterToggle.focus();
+    }
+  });
   const updatePagination = setupPagination(
     products,
     CATALOG_LIST_SELECTOR,
@@ -55,7 +75,7 @@ function initCatalog(products, onAddToBasket) {
   const sortSelect = document.querySelector('.catalog__sort-select');
   if (sortSelect) {
     sortSelect.addEventListener('change', () => {
-      renderCatalog(getSortedProducts(filteredProducts));
+      renderCatalog(getSortedProducts(filteredProducts), { resetPage: true });
     });
   }
 
@@ -63,12 +83,18 @@ function initCatalog(products, onAddToBasket) {
     removeCatalogError();
     removeCatalogEmpty();
 
-    if (productsToRender.length === 0) {
-      renderCatalogEmpty();
-      return;
+    if (catalogCount)
+      catalogCount.textContent = `Найдено: ${productsToRender.length}`;
+    if (filterForm && filterCount) {
+      const activeCount = filterForm.querySelectorAll(
+        'input[name="type"]:checked, input[value="instock"]:checked'
+      ).length;
+      filterCount.hidden = activeCount === 0;
+      filterCount.textContent = activeCount;
     }
 
     updatePagination(productsToRender, options);
+    if (productsToRender.length === 0) renderCatalogEmpty();
   }
 }
 

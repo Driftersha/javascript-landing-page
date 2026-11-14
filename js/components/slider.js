@@ -18,17 +18,19 @@ export function initDayProductsSlider(products, onAddToBasket) {
 
   // Инициализация слайдера
   new Swiper('.day-products__slider', {
-    slidesPerView: 1,
-    spaceBetween: 16,
+    slidesPerView: 2,
+    spaceBetween: 10,
     navigation: {
       nextEl: '.day-products__navigation-btn--next',
       prevEl: '.day-products__navigation-btn--prev',
     },
     watchOverflow: true,
-    speed: 500,
+    speed: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      ? 0
+      : 400,
     breakpoints: {
-      768: { slidesPerView: 2, spaceBetween: 24 },
-      1024: { slidesPerView: 4, spaceBetween: 40 },
+      768: { slidesPerView: 3, spaceBetween: 20 },
+      1024: { slidesPerView: 4, spaceBetween: 24 },
     },
   });
 }
