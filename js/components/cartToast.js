@@ -21,8 +21,8 @@ export function announceCartAddition(product, quantity) {
   link.textContent = 'Посмотреть корзину →';
   toast.append(title, details, link);
   toast.classList.add('cart-toast--visible');
-  clearTimeout(timeoutId);
-  timeoutId = setTimeout(
+  window.clearTimeout(timeoutId);
+  timeoutId = window.setTimeout(
     () => toast.classList.remove('cart-toast--visible'),
     5500
   );
