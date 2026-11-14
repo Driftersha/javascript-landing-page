@@ -4,14 +4,10 @@ import { initBurgerMenu } from './components/burgerMenu.js';
 import { initCityDropdown } from './components/cityDropdown.js';
 import { initAccordion } from './components/accordion.js';
 import { initFormValidation } from './components/formValidation.js';
-import { initGlobalRipple } from './components/ripple.js';
 import { initCatalogPage } from './pages/catalog.js';
 import { initCheckoutPage } from './pages/checkout.js';
 import { initProductPage } from './pages/product.js';
 import { createBasketService } from './services/basketService.js';
-
-// Инициализация ripple-эффекта по клику в любом месте страницы
-initGlobalRipple();
 
 // --- Инициализация UI компонентов ---
 initBurgerMenu();
