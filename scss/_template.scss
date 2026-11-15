@@ -1,3 +1,8 @@
+$showcase-surface: #f1f4f2;
+$showcase-hover: #e5ece8;
+$showcase-text: #26332d;
+$showcase-muted: #52635a;
+
 .skip-link {
   position: absolute;
   top: -100px;
@@ -292,8 +297,8 @@ html {
 
 /* Mobile-first editorial refresh: real product imagery, compact sections */
 .experience-hero {
-  background: #f4f1ec;
-  color: #222521;
+  background: $showcase-surface;
+  color: $showcase-text;
 }
 .experience-hero__inner {
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
@@ -304,7 +309,7 @@ html {
   padding: clamp(36px, 6vw, 84px) 0 !important;
 }
 .experience-hero .experience-kicker {
-  color: #756d60;
+  color: $showcase-muted;
 }
 .experience-hero h1 {
   font-family: Georgia, serif;
@@ -315,24 +320,24 @@ html {
   max-width: 720px;
 }
 .experience-hero p {
-  color: #605e59;
+  color: $showcase-muted;
   font-size: clamp(15px, 1.5vw, 18px);
   max-width: 530px;
 }
 .experience-cta {
-  background: #292d29;
+  background: $showcase-text;
   color: #fff;
   border-radius: 2px;
 }
 .experience-cta:hover {
-  background: #454b42;
+  background: #3a4b42;
 }
 .experience-link {
-  color: #343832;
+  color: $showcase-text;
 }
 .experience-art {
   min-height: 380px;
-  background: radial-gradient(ellipse at 50% 55%, #e9e0d1, #ddd3c4 70%);
+  background: radial-gradient(ellipse at 50% 55%, #e7eeea, #dce5e0 70%);
   overflow: hidden;
 }
 .experience-art img {
@@ -342,7 +347,7 @@ html {
   width: auto;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 25px 18px #332c2229);
+  filter: drop-shadow(0 25px 18px #26332d29);
   transition: transform 0.45s ease;
 }
 .experience-art:hover img {
@@ -353,7 +358,7 @@ html {
   padding: clamp(38px, 5vw, 76px) 0;
 }
 .experience-categories .experience-kicker {
-  color: #867967;
+  color: $showcase-muted;
 }
 .experience-categories__heading {
   display: flex;
@@ -371,7 +376,7 @@ html {
 .experience-categories__heading p {
   max-width: 290px;
   line-height: 1.5;
-  color: #77736e;
+  color: $showcase-muted;
 }
 .experience-category-grid {
   display: grid;
@@ -385,15 +390,15 @@ html {
   flex-direction: column;
   overflow: hidden;
   border-radius: 8px;
-  background: #f5f3ef;
-  color: #292d29;
+  background: $showcase-surface;
+  color: $showcase-text;
 }
 .collection-card__media {
   isolation: isolate;
   display: block;
   aspect-ratio: 1 / 1.06;
   max-height: 245px;
-  background: #f4f2ed;
+  background: $showcase-surface;
 }
 .collection-card__media img {
   width: 100%;
@@ -419,14 +424,14 @@ html {
 }
 .collection-card:hover .collection-card__name,
 .collection-card:focus-visible .collection-card__name {
-  background: #eae6de;
+  background: $showcase-hover;
 }
 .back-to-top {
   right: 14px;
   bottom: 18px;
   width: 40px;
   height: 40px;
-  background: #292d29;
+  background: $showcase-text;
   font-size: 21px;
   box-shadow: 0 4px 14px #0002;
 }

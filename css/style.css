@@ -3405,8 +3405,8 @@ html {
 }
 /* Mobile-first editorial refresh: real product imagery, compact sections */
 .experience-hero {
-  background: #f4f1ec;
-  color: #222521;
+  background: #f1f4f2;
+  color: #26332d;
 }
 
 .experience-hero__inner {
@@ -3420,7 +3420,7 @@ html {
 }
 
 .experience-hero .experience-kicker {
-  color: #756d60;
+  color: #52635a;
 }
 
 .experience-hero h1 {
@@ -3433,28 +3433,28 @@ html {
 }
 
 .experience-hero p {
-  color: #605e59;
+  color: #52635a;
   font-size: clamp(15px, 1.5vw, 18px);
   max-width: 530px;
 }
 
 .experience-cta {
-  background: #292d29;
+  background: #26332d;
   color: #fff;
   border-radius: 2px;
 }
 
 .experience-cta:hover {
-  background: #454b42;
+  background: #3a4b42;
 }
 
 .experience-link {
-  color: #343832;
+  color: #26332d;
 }
 
 .experience-art {
   min-height: 380px;
-  background: radial-gradient(ellipse at 50% 55%, #e9e0d1, #ddd3c4 70%);
+  background: radial-gradient(ellipse at 50% 55%, #e7eeea, #dce5e0 70%);
   overflow: hidden;
 }
 
@@ -3465,7 +3465,7 @@ html {
   width: auto;
   height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 25px 18px rgba(51, 44, 34, 0.1607843137));
+  filter: drop-shadow(0 25px 18px rgba(38, 51, 45, 0.1607843137));
   transition: transform 0.45s ease;
 }
 
@@ -3479,7 +3479,7 @@ html {
 }
 
 .experience-categories .experience-kicker {
-  color: #867967;
+  color: #52635a;
 }
 
 .experience-categories__heading {
@@ -3500,7 +3500,7 @@ html {
 .experience-categories__heading p {
   max-width: 290px;
   line-height: 1.5;
-  color: #77736e;
+  color: #52635a;
 }
 
 .experience-category-grid {
@@ -3516,8 +3516,8 @@ html {
   flex-direction: column;
   overflow: hidden;
   border-radius: 8px;
-  background: #f5f3ef;
-  color: #292d29;
+  background: #f1f4f2;
+  color: #26332d;
 }
 
 .collection-card__media {
@@ -3525,7 +3525,7 @@ html {
   display: block;
   aspect-ratio: 1/1.06;
   max-height: 245px;
-  background: #f4f2ed;
+  background: #f1f4f2;
 }
 
 .collection-card__media img {
@@ -3554,7 +3554,7 @@ html {
 
 .collection-card:hover .collection-card__name,
 .collection-card:focus-visible .collection-card__name {
-  background: #eae6de;
+  background: #e5ece8;
 }
 
 .back-to-top {
@@ -3562,7 +3562,7 @@ html {
   bottom: 18px;
   width: 40px;
   height: 40px;
-  background: #292d29;
+  background: #26332d;
   font-size: 21px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1333333333);
 }
