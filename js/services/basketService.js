@@ -34,18 +34,19 @@ export function createBasketService(products, storage = createBasketStorage()) {
       return true;
     },
 
-    removeItem(productId) {
+    decreaseQuantity(productId) {
       const entries = getEntries();
       const index = entries.findIndex((entry) => entry.id === productId);
-      if (index === -1) return;
+      if (index === -1 || entries[index].quantity === 1) return;
 
-      if (entries[index].quantity > 1) {
-        entries[index].quantity -= 1;
-      } else {
-        entries.splice(index, 1);
-      }
-
+      entries[index].quantity -= 1;
       storage.write(entries);
+    },
+
+    removeItem(productId) {
+      const entries = getEntries();
+      const nextEntries = entries.filter((entry) => entry.id !== productId);
+      if (nextEntries.length !== entries.length) storage.write(nextEntries);
     },
 
     clear() {

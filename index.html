@@ -34,105 +34,84 @@
               <use href="images/sprite.svg#icon-logo"></use>
             </svg>
           </a>
-          <button class="header__catalog-btn" type="button">
+          <button
+            class="header__catalog-btn"
+            type="button"
+            aria-label="Категории каталога"
+          >
             <svg class="header__icon" width="24" height="24" aria-hidden="true">
               <use href="images/sprite.svg#icon-menu"></use>
             </svg>
             <span class="header__catalog-text">Каталог</span>
           </button>
 
-          <div class="header__right">
-            <!-- Location -->
-            <div class="header__location location">
+          <!-- Location -->
+          <div class="header__location location">
+            <svg
+              class="location__icon"
+              width="24"
+              height="24"
+              aria-hidden="true"
+            >
+              <use href="images/sprite.svg#icon-location"></use>
+            </svg>
+            <span class="location__text">Ваш город:</span>
+            <button class="location__city" type="button">
+              <span class="location__city-name">Оренбург</span>
               <svg
-                class="location__icon"
-                width="24"
-                height="24"
+                class="location__arrow"
+                width="9"
+                height="6"
                 aria-hidden="true"
               >
-                <use href="images/sprite.svg#icon-location"></use>
+                <use href="images/sprite.svg#icon-arrow-bottom"></use>
               </svg>
-              <span class="location__text">Ваш город:</span>
-              <button class="location__city" type="button">
-                <span class="location__city-name">Оренбург</span>
-                <svg
-                  class="location__arrow"
-                  width="9"
-                  height="6"
-                  aria-hidden="true"
-                >
-                  <use href="images/sprite.svg#icon-arrow-bottom"></use>
-                </svg>
-              </button>
-              <ul class="location__sublist">
-                <li class="location__subitem">
-                  <button class="location__sublink" type="button">
-                    Москва
-                  </button>
-                </li>
-                <li class="location__subitem">
-                  <button class="location__sublink" type="button">
-                    Оренбург
-                  </button>
-                </li>
-                <li class="location__subitem">
-                  <button class="location__sublink" type="button">
-                    Санкт-Петербург
-                  </button>
-                </li>
-              </ul>
-            </div>
-            <!-- User list -->
-            <ul class="header__user-list">
-              <li class="header__user-item">
-                <button class="header__user-btn" type="button">
-                  <span class="header__user-text">Корзина</span>
-                  <svg
-                    class="header__user-icon"
-                    width="24"
-                    height="24"
-                    aria-hidden="true"
-                  >
-                    <use href="images/sprite.svg#icon-basket"></use>
-                  </svg>
-                  <span class="header__user-count">0</span>
+            </button>
+            <ul class="location__sublist">
+              <li class="location__subitem">
+                <button class="location__sublink" type="button">Москва</button>
+              </li>
+              <li class="location__subitem">
+                <button class="location__sublink" type="button">
+                  Оренбург
                 </button>
-                <!-- Basket -->
-                <div class="header__basket basket">
-                  <ul class="basket__list"></ul>
-                  <a class="basket__link btn" href="./checkout.html"
-                    >Перейти к оформлению</a
-                  >
-                  <div class="basket__empty-block">Корзина пока пуста</div>
-                </div>
+              </li>
+              <li class="location__subitem">
+                <button class="location__sublink" type="button">
+                  Санкт-Петербург
+                </button>
               </li>
             </ul>
           </div>
-        </div>
-
-        <!-- Header - bottom -->
-        <div class="header__bottom">
-          <ul class="header__nav-list">
-            <li class="header__nav-item">
-              <a class="header__nav-link" href="./#description">О коллекции</a>
-            </li>
-            <li class="header__nav-item">
-              <a class="header__nav-link" href="./#day-products">Подборка</a>
-            </li>
-            <li class="header__nav-item">
-              <a class="header__nav-link" href="./#faq">Вопросы и ответы</a>
-            </li>
-            <li class="header__nav-item">
-              <a class="header__nav-link" href="./#questions">Консультация</a>
-            </li>
-            <li class="header__nav-item">
-              <a class="header__nav-link" href="#contacts">Контакты</a>
+          <!-- User list -->
+          <ul class="header__user-list">
+            <li class="header__user-item">
+              <button
+                class="header__user-btn"
+                type="button"
+                aria-label="Корзина"
+              >
+                <span class="header__user-text">Корзина</span>
+                <svg
+                  class="header__user-icon"
+                  width="24"
+                  height="24"
+                  aria-hidden="true"
+                >
+                  <use href="images/sprite.svg#icon-basket"></use>
+                </svg>
+                <span class="header__user-count">0</span>
+              </button>
+              <!-- Basket -->
+              <div class="header__basket basket">
+                <ul class="basket__list"></ul>
+                <a class="basket__link btn" href="./checkout.html"
+                  >Перейти к оформлению</a
+                >
+                <div class="basket__empty-block">Корзина пока пуста</div>
+              </div>
             </li>
           </ul>
-          <div class="header__contacts">
-            <span class="header__phone">Контакты — демо</span>
-            <a class="header__btn btn" href="#questions">Задать вопрос</a>
-          </div>
         </div>
 
         <!-- Catalog -->
@@ -193,6 +172,32 @@
         </div>
       </div>
     </header>
+    <div class="container">
+      <!-- Header - bottom -->
+      <div class="header__bottom">
+        <ul class="header__nav-list">
+          <li class="header__nav-item">
+            <a class="header__nav-link" href="./#description">О коллекции</a>
+          </li>
+          <li class="header__nav-item">
+            <a class="header__nav-link" href="./#day-products">Подборка</a>
+          </li>
+          <li class="header__nav-item">
+            <a class="header__nav-link" href="./#faq">Вопросы и ответы</a>
+          </li>
+          <li class="header__nav-item">
+            <a class="header__nav-link" href="./#questions">Консультация</a>
+          </li>
+          <li class="header__nav-item">
+            <a class="header__nav-link" href="#contacts">Контакты</a>
+          </li>
+        </ul>
+        <div class="header__contacts">
+          <span class="header__phone">Контакты — демо</span>
+          <a class="header__btn btn" href="#questions">Задать вопрос</a>
+        </div>
+      </div>
+    </div>
 
     <main>
       <section class="experience-hero" aria-labelledby="experience-title">

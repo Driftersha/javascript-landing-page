@@ -29,37 +29,38 @@
               <use href="images/sprite.svg#icon-logo"></use>
             </svg>
           </a>
-          <a href="./index.html#catalog" class="btn">Вернуться в каталог</a>
-          <div class="header__right">
-            <ul class="header__user-list">
-              <li class="header__user-item">
-                <button
-                  class="header__user-btn"
-                  type="button"
-                  aria-expanded="false"
-                  aria-controls="product-basket"
+          <a href="./index.html#catalog" class="header__catalog-link btn"
+            >Каталог</a
+          >
+          <ul class="header__user-list">
+            <li class="header__user-item">
+              <button
+                class="header__user-btn"
+                aria-label="Корзина"
+                type="button"
+                aria-expanded="false"
+                aria-controls="product-basket"
+              >
+                <span class="header__user-text">Корзина</span>
+                <svg
+                  class="header__user-icon"
+                  width="24"
+                  height="24"
+                  aria-hidden="true"
                 >
-                  <span class="header__user-text">Корзина</span>
-                  <svg
-                    class="header__user-icon"
-                    width="24"
-                    height="24"
-                    aria-hidden="true"
-                  >
-                    <use href="images/sprite.svg#icon-basket"></use>
-                  </svg>
-                  <span class="header__user-count">0</span>
-                </button>
-                <div class="header__basket basket" id="product-basket">
-                  <ul class="basket__list"></ul>
-                  <a class="basket__link btn" href="./checkout.html"
-                    >Перейти к оформлению</a
-                  >
-                  <div class="basket__empty-block">Корзина пока пуста</div>
-                </div>
-              </li>
-            </ul>
-          </div>
+                  <use href="images/sprite.svg#icon-basket"></use>
+                </svg>
+                <span class="header__user-count">0</span>
+              </button>
+              <div class="header__basket basket" id="product-basket">
+                <ul class="basket__list"></ul>
+                <a class="basket__link btn" href="./checkout.html"
+                  >Перейти к оформлению</a
+                >
+                <div class="basket__empty-block">Корзина пока пуста</div>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
     </header>

@@ -1,6 +1,14 @@
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 120;
+  padding-top: env(safe-area-inset-top);
+  background-color: $color-white;
+  box-shadow: 0 2px 12px #25292312;
+
   &__top {
-    padding: 18px 0;
+    min-height: 64px;
+    padding: 8px 0;
     display: flex;
     align-items: center;
     border-bottom: 1px solid $color-solitude;
@@ -10,8 +18,8 @@
     }
 
     @media (max-width: $vp-mobile) {
-      gap: 20px 14px;
-      flex-wrap: wrap;
+      min-height: 60px;
+      gap: 8px;
     }
   }
 
@@ -29,7 +37,14 @@
     }
 
     @media (max-width: $vp-tablet) {
-      margin-right: auto;
+      margin-right: 0;
+    }
+
+    @media (max-width: $vp-mobile) {
+      svg {
+        width: clamp(88px, 26vw, 120px);
+        height: auto;
+      }
     }
   }
 
@@ -53,13 +68,28 @@
 
     @media (max-width: $vp-mobile) {
       justify-content: center;
+      width: 44px;
+      height: 44px;
+      flex: 0 0 auto;
+      padding: 0;
     }
   }
 
-  &__right {
-    display: flex;
-    gap: 16px;
-    width: 100%;
+  &__catalog-link {
+    min-height: 44px;
+  }
+
+  &__location {
+    width: auto;
+
+    @media (max-width: $vp-mobile) {
+      flex: 0 1 100px;
+      flex-wrap: nowrap;
+
+      .location__icon {
+        display: none;
+      }
+    }
   }
 
   &__catalog-text {
@@ -80,7 +110,7 @@
     position: relative;
 
     @media (max-width: $vp-tablet) {
-      margin-left: 0;
+      margin-left: auto;
       gap: 25px;
     }
 
@@ -92,7 +122,10 @@
   &__user-btn {
     background-color: transparent;
     border: none;
-    padding: 0;
+    padding: 0 3px;
+    min-width: 44px;
+    min-height: 44px;
+    color: $color-black;
     display: flex;
     align-items: center;
     font-size: 12px;
@@ -107,13 +140,11 @@
   }
 
   &__user-count {
-    height: 20px;
-    width: 20px;
+    height: 22px;
+    min-width: 22px;
+    padding-inline: 4px;
     border-radius: 50%;
     background-color: $color-granny-smith-apple;
-    position: absolute;
-    top: -5px;
-    right: -13px;
     display: flex;
     align-items: center;
     justify-content: center;

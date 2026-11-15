@@ -36,11 +36,11 @@
 }
 .product-page__image {
   width: 100%;
-  max-height: 480px;
-  object-fit: contain;
-  background: #f7f7f7;
+  aspect-ratio: 4 / 5;
+  max-height: 520px;
+  object-fit: cover;
+  object-position: center 56%;
   border-radius: 12px;
-  padding: 28px;
 }
 .product-page__title {
   font-size: clamp(24px, 3vw, 40px);
@@ -70,9 +70,6 @@
     grid-template-columns: 1fr;
     gap: 20px;
   }
-  .product-page__image {
-    max-height: 320px;
-  }
   .product-page {
     padding-top: 20px;
     padding-bottom: 40px;
@@ -81,6 +78,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: calc(76px + env(safe-area-inset-top));
 }
 .experience-hero {
   background: #111a29;
@@ -413,8 +411,9 @@ html {
   min-height: 0;
   background: #f5f3ef;
   color: #292d29;
-  padding: 18px;
-  border-radius: 4px;
+  padding: 0 0 14px;
+  border-radius: 8px;
+  overflow: hidden;
   font-size: 22px;
   box-shadow: none;
   gap: 8px;
@@ -426,8 +425,12 @@ html {
 .experience-category-grid a img {
   width: 100%;
   height: clamp(130px, 18vw, 230px);
-  object-fit: contain;
-  mix-blend-mode: multiply;
+  object-fit: cover;
+  object-position: center 56%;
+}
+.experience-category-grid a > strong,
+.experience-category-grid a > span {
+  padding-inline: 12px;
 }
 .experience-category-grid a strong {
   font-size: clamp(18px, 2vw, 24px);
@@ -496,7 +499,7 @@ html {
   .experience-category-grid a,
   .experience-category-grid a:nth-child(2),
   .experience-category-grid a:nth-child(3) {
-    padding: 12px;
+    padding: 0 0 12px;
     font-size: 18px;
   }
   .experience-category-grid a img {

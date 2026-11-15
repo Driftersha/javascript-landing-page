@@ -220,4 +220,10 @@
             stroke="#FC5A5A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
     </symbol>
 
+    <symbol id="icon-minus" viewBox="0 0 24 24" fill="none">
+        <path d="M5 12h14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+    </symbol>
+    <symbol id="icon-plus" viewBox="0 0 24 24" fill="none">
+        <path d="M5 12h14m-7-7v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+    </symbol>
 </svg>

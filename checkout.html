@@ -33,7 +33,11 @@
               <use href="images/sprite.svg#icon-logo"></use>
             </svg>
           </a>
-          <button class="header__catalog-btn" type="button">
+          <button
+            class="header__catalog-btn"
+            type="button"
+            aria-label="Категории каталога"
+          >
             <svg class="header__logo" width="24" height="24" aria-hidden="true">
               <use href="images/sprite.svg#icon-menu"></use>
             </svg>
@@ -80,40 +84,31 @@
           </div>
 
           <!-- User list -->
-          <ul class="header__user-list"></ul>
-        </div>
-
-        <!-- Header - bottom -->
-        <div class="header__bottom">
-          <ul class="header__nav-list">
-            <li class="header__nav-item">
-              <a class="header__nav-link" href="./index.html#description"
-                >Отраслевые решения</a
+          <ul class="header__user-list">
+            <li class="header__user-item">
+              <button
+                class="header__user-btn"
+                type="button"
+                aria-label="Корзина"
               >
-            </li>
-            <li class="header__nav-item">
-              <a class="header__nav-link" href="./index.html#day-products"
-                >Портфолио</a
-              >
-            </li>
-            <li class="header__nav-item">
-              <a class="header__nav-link" href="./index.html#faq">Клиентам</a>
-            </li>
-            <li class="header__nav-item">
-              <a class="header__nav-link" href="./index.html#questions"
-                >Партнерам</a
-              >
-            </li>
-            <li class="header__nav-item">
-              <a class="header__nav-link" href="#contacts">Контакты</a>
+                <span class="header__user-text">Корзина</span>
+                <svg
+                  class="header__user-icon"
+                  width="24"
+                  height="24"
+                  aria-hidden="true"
+                >
+                  <use href="images/sprite.svg#icon-basket"></use>
+                </svg>
+                <span class="header__user-count">0</span>
+              </button>
+              <!-- Basket -->
+              <div class="header__basket basket">
+                <ul class="basket__list"></ul>
+                <div class="basket__empty-block">Корзина пока пуста</div>
+              </div>
             </li>
           </ul>
-          <div class="header__contacts">
-            <span class="header__phone">Контакты — демо</span>
-            <a class="header__btn btn" href="./index.html#questions"
-              >Задать вопрос</a
-            >
-          </div>
         </div>
 
         <!-- Catalog -->
@@ -174,6 +169,40 @@
         </div>
       </div>
     </header>
+    <div class="container">
+      <!-- Header - bottom -->
+      <div class="header__bottom">
+        <ul class="header__nav-list">
+          <li class="header__nav-item">
+            <a class="header__nav-link" href="./index.html#description"
+              >Отраслевые решения</a
+            >
+          </li>
+          <li class="header__nav-item">
+            <a class="header__nav-link" href="./index.html#day-products"
+              >Портфолио</a
+            >
+          </li>
+          <li class="header__nav-item">
+            <a class="header__nav-link" href="./index.html#faq">Клиентам</a>
+          </li>
+          <li class="header__nav-item">
+            <a class="header__nav-link" href="./index.html#questions"
+              >Партнерам</a
+            >
+          </li>
+          <li class="header__nav-item">
+            <a class="header__nav-link" href="#contacts">Контакты</a>
+          </li>
+        </ul>
+        <div class="header__contacts">
+          <span class="header__phone">Контакты — демо</span>
+          <a class="header__btn btn" href="./index.html#questions"
+            >Задать вопрос</a
+          >
+        </div>
+      </div>
+    </div>
 
     <main>
       <!-- Breadcrumbs -->
@@ -211,7 +240,7 @@
 
           <div class="checkout__summary">
             <span class="checkout__total-text">Итого:</span>
-            <span class="checkout__total-price"></span>
+            <span class="checkout__total-price" aria-live="polite"></span>
           </div>
 
           <form class="checkout-form" action="#" method="POST">

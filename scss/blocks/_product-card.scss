@@ -18,7 +18,6 @@
   }
 
   &__visual {
-    background-color: $color-white-smoke;
     border-radius: 12px;
     display: flex;
     aspect-ratio: 290 / 436;
@@ -37,10 +36,8 @@
 
   &__img {
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     width: 100%;
-    max-width: 290px;
-    transform: scale(1.03);
   }
 
   &__more {

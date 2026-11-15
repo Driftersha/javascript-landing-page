@@ -88,8 +88,14 @@ test('корзина сохраняет только ID и количество,
       { id: 2, quantity: 1 },
     ],
   });
-  basket.removeItem(1);
+  basket.decreaseQuantity(1);
   assert.equal(basket.getTotalPrice(), 200);
+  basket.decreaseQuantity(1);
+  assert.equal(basket.getTotalPrice(), 200);
+  basket.addItem(products[0]);
+  basket.removeItem(1);
+  assert.deepEqual(basket.getItems(), [{ ...products[1], quantity: 1 }]);
+  assert.equal(basket.getTotalPrice(), 80);
   basket.clear();
   assert.deepEqual(basket.getItems(), []);
 });

@@ -86,7 +86,8 @@
     }
 
     &__sublist {
-      left: 0;
+      left: auto;
+      right: 0;
     }
 
     &__city-name {
