@@ -26,18 +26,18 @@ export default class ProductCard {
   renderCard() {
     const card = getDivEl('product-card');
 
-    // Визуальная часть с картинкой и кнопками
+    // Кнопки идут отдельным блоком после фото и информации.
     const visualContainer = getDivEl('product-card__visual');
     const img = getImgEl(this.product.image, this.product.name);
     visualContainer.appendChild(img);
 
-    const moreInfoContainer = getDivEl('product-card__more');
+    const actions = getDivEl('product-card__actions');
     const addToCartBtn = getBtnEl(
       'Добавить в корзину',
       'button',
       'product-card__btn btn btn--icon'
     );
-    const cartIcon = getSvgIcon(ICON_BASKET, 'btn__text', 24, 24);
+    const cartIcon = getSvgIcon(ICON_BASKET, '', 18, 18);
     const cartText = getSpanEl(ADD_TO_CART_TEXT, 'btn__text');
     addToCartBtn.append(cartIcon, cartText);
 
@@ -56,13 +56,8 @@ export default class ProductCard {
       cartText.textContent = 'Нет в наличии';
     }
 
-    addToCartBtn.addEventListener('click', (event) => {
-      event.preventDefault();
-      this.addToBasket();
-    });
-
-    moreInfoContainer.append(addToCartBtn, moreDetailsBtn);
-    visualContainer.appendChild(moreInfoContainer);
+    addToCartBtn.addEventListener('click', () => this.addToBasket());
+    actions.append(addToCartBtn, moreDetailsBtn);
 
     const infoContainer = getDivEl('product-card__info');
     const title = getH2El(this.product.name);
@@ -118,7 +113,7 @@ export default class ProductCard {
       });
     }
 
-    card.append(visualContainer, infoContainer);
+    card.append(visualContainer, infoContainer, actions);
     return card;
   }
 

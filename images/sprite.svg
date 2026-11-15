@@ -226,4 +226,13 @@
     <symbol id="icon-plus" viewBox="0 0 24 24" fill="none">
         <path d="M5 12h14m-7-7v14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
     </symbol>
+    <symbol id="icon-arrow-diagonal" viewBox="0 0 24 24" fill="none">
+        <path d="M6 18 18 6M8 6h10v10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
+    <symbol id="icon-back" viewBox="0 0 24 24" fill="none">
+        <path d="M20 12H4m6-6-6 6 6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
+    <symbol id="icon-up" viewBox="0 0 24 24" fill="none">
+        <path d="M12 20V4m-6 6 6-6 6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
 </svg>

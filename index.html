@@ -213,7 +213,11 @@
             </p>
             <div class="experience-actions">
               <a href="#catalog" class="experience-cta"
-                >Выбрать светильник <span aria-hidden="true">↗</span></a
+                >Выбрать светильник
+                <svg width="16" height="16" aria-hidden="true">
+                  <use
+                    href="images/sprite.svg#icon-arrow-diagonal"
+                  ></use></svg></a
               ><a href="#day-products" class="experience-link"
                 >Посмотреть подборку</a
               >
@@ -241,25 +245,42 @@
             <p>От выразительных подвесов до лаконичных потолочных моделей.</p>
           </div>
           <div class="experience-category-grid">
-            <a href="./index.html?category=pendant#catalog"
-              ><img src="images/item-1.png" alt="" loading="lazy" /><strong
-                >Подвесные</strong
-              ><span
-                >Смотреть коллекцию <span aria-hidden="true">↗</span></span
-              ></a
-            ><a href="./index.html?category=ceiling#catalog"
-              ><img src="images/item-4.png" alt="" loading="lazy" /><strong
-                >Потолочные</strong
-              ><span
-                >Смотреть коллекцию <span aria-hidden="true">↗</span></span
-              ></a
-            ><a href="./index.html?category=point#catalog"
-              ><img src="images/item-3.png" alt="" loading="lazy" /><strong
-                >Точечные</strong
-              ><span
-                >Смотреть коллекцию <span aria-hidden="true">↗</span></span
-              ></a
+            <a
+              class="collection-card"
+              href="./index.html?category=pendant#catalog"
             >
+              <span class="collection-card__media">
+                <img src="images/item-1.png" alt="" loading="lazy" />
+              </span>
+              <strong class="collection-card__name">Подвесные</strong>
+              <svg width="16" height="16" aria-hidden="true">
+                <use href="images/sprite.svg#icon-arrow-diagonal"></use>
+              </svg>
+            </a>
+            <a
+              class="collection-card"
+              href="./index.html?category=ceiling#catalog"
+            >
+              <span class="collection-card__media">
+                <img src="images/item-4.png" alt="" loading="lazy" />
+              </span>
+              <strong class="collection-card__name">Потолочные</strong>
+              <svg width="16" height="16" aria-hidden="true">
+                <use href="images/sprite.svg#icon-arrow-diagonal"></use>
+              </svg>
+            </a>
+            <a
+              class="collection-card"
+              href="./index.html?category=point#catalog"
+            >
+              <span class="collection-card__media">
+                <img src="images/item-3.png" alt="" loading="lazy" />
+              </span>
+              <strong class="collection-card__name">Точечные</strong>
+              <svg width="16" height="16" aria-hidden="true">
+                <use href="images/sprite.svg#icon-arrow-diagonal"></use>
+              </svg>
+            </a>
           </div>
         </div>
       </section>
@@ -451,8 +472,14 @@
             </form>
             <div class="catalog__products">
               <div class="catalog__sort">
-                <p class="catalog__sort-text">Сортировать по:</p>
-                <select class="catalog__sort-select" name="sort">
+                <label for="catalog-sort" class="catalog__sort-text"
+                  >Сортировать по:</label
+                >
+                <select
+                  class="catalog__sort-select"
+                  name="sort"
+                  id="catalog-sort"
+                >
                   <option value="price-min">Сначала дешёвые</option>
                   <option value="price-max">Сначала дорогие</option>
                   <option value="rating-max">Сначала популярные</option>
