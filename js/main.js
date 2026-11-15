@@ -1,5 +1,6 @@
 // --- Импорты компонентов ---
 import Basket from './components/Basket.js';
+import { getProducts } from './api/productsApi.js';
 import { initPageEnhancements } from './components/pageEnhancements.js';
 import { initBurgerMenu } from './components/burgerMenu.js';
 import { initCityDropdown } from './components/cityDropdown.js';
@@ -17,12 +18,10 @@ initAccordion();
 initFormValidation();
 initPageEnhancements();
 
-// --- Инициализация корзины (компонент, реализующий добавление и хранение товаров) ---
-const basketService = createBasketService();
-const basket = new Basket(basketService);
+const productsRequest = getProducts();
+const products = await productsRequest.catch(() => null);
+const basket = new Basket(createBasketService(products ?? []));
 
-// --- Инициализация страниц ---
-initCatalogPage(basket);
-initCheckoutPage(basket);
-
-initProductPage(basket);
+initCatalogPage(basket, productsRequest);
+initCheckoutPage(basket, products !== null);
+initProductPage(basket, productsRequest);

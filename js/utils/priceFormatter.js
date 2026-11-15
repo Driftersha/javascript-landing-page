@@ -1,9 +1,11 @@
-const priceFormatter = new Intl.NumberFormat('ru-RU');
+import { brand } from '../config/brand.js';
 
-export function formatPrice(price) {
-  return priceFormatter.format(price);
-}
+const priceFormatter = new Intl.NumberFormat(brand.locale, {
+  style: 'currency',
+  currency: brand.currency,
+  minimumFractionDigits: 0,
+});
 
 export function formatPriceWithCurrency(price) {
-  return `${formatPrice(price)} руб`;
+  return priceFormatter.format(price);
 }

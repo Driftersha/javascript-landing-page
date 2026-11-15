@@ -1,4 +1,4 @@
-import { getProducts } from '../api/productsApi.js';
+import { brand } from '../config/brand.js';
 import { formatPriceWithCurrency } from '../utils/priceFormatter.js';
 
 const LOCATION_NAMES = {
@@ -14,7 +14,7 @@ function createText(tag, className, value) {
   return node;
 }
 
-export async function initProductPage(basket) {
+export async function initProductPage(basket, productsRequest) {
   const container = document.querySelector('[data-product-detail]');
   if (!container) return;
 
@@ -27,7 +27,7 @@ export async function initProductPage(basket) {
   }
 
   try {
-    const products = await getProducts();
+    const products = await productsRequest;
     const product = products.find((item) => String(item.id) === id);
     if (!product) {
       container.append(
@@ -36,7 +36,7 @@ export async function initProductPage(basket) {
       return;
     }
 
-    document.title = `${product.name} — Briaton (демо)`;
+    document.title = `${product.name} — ${brand.name} (демо)`;
     const image = document.createElement('img');
     image.src = product.image;
     image.alt = product.name;

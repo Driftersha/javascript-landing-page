@@ -13,12 +13,11 @@ import { announceCartAddition } from './cartToast.js';
 export default class Basket {
   constructor(basketService) {
     this.basketService = basketService;
-    this.basketList =
-      document.querySelector('.basket__list') ?? document.createElement('ul');
+    this.basketList = document.querySelector('.header__basket .basket__list');
     this.basketCounter = document.querySelector('.header__user-count');
     this.basketButton = document.querySelector('.header__user-btn');
     this.basketElement = document.querySelector('.header__basket');
-    this.emptyBlock = document.querySelector('.basket__empty-block');
+    this.emptyBlock = this.basketElement?.querySelector('.basket__empty-block');
     this.checkoutButton = document.querySelector('.basket__link');
 
     this.updateAll();
@@ -28,15 +27,18 @@ export default class Basket {
       this.basketElement.id ||= 'header-basket';
       this.basketButton.setAttribute('aria-controls', this.basketElement.id);
       this.basketButton.setAttribute('aria-expanded', 'false');
+      this.basketElement.inert = true;
 
       const closeBasket = () => {
         this.basketElement.classList.remove('basket--active');
+        this.basketElement.inert = true;
         this.basketButton.setAttribute('aria-expanded', 'false');
       };
 
       this.basketButton.addEventListener('click', (event) => {
         event.stopPropagation();
         const open = this.basketElement.classList.toggle('basket--active');
+        this.basketElement.inert = !open;
         this.basketButton.setAttribute('aria-expanded', String(open));
       });
 
@@ -59,18 +61,12 @@ export default class Basket {
 
   // Добавление товара в корзину
   addItem(product) {
-    this.basketService.addItem(product);
+    if (!this.basketService.addItem(product)) return;
     this.updateAll();
     announceCartAddition(
       product,
       this.getItems().find((item) => item.id === product.id)?.quantity ?? 1
     );
-  }
-
-  // Удаление товара из корзины
-  removeItem(productId) {
-    this.basketService.removeItem(productId);
-    this.updateAll();
   }
 
   // Создание элемента корзины для каждого товара
@@ -84,46 +80,81 @@ export default class Basket {
     itemElement.dataset.id = product.id;
 
     const imgWrapper = getDivEl('basket__img');
-    const img = getImgEl(product.image, product.name, 'basket__img');
-    imgWrapper.append(img);
+    imgWrapper.append(getImgEl(product.image, '', 'basket__image'));
 
     const nameEl = getSpanEl(product.name, 'basket__name');
     const priceEl = getSpanEl(
-      formatPriceWithCurrency(product.price.new),
+      formatPriceWithCurrency(product.price.new * product.quantity),
       'basket__price'
     );
-    const quantityEl = getSpanEl(product.quantity, 'basket__quantity');
+    const controls = getDivEl('basket__controls');
+    controls.setAttribute('role', 'group');
+    controls.setAttribute('aria-label', `Количество: ${product.name}`);
 
-    const removeBtn = getBtnEl('Удалить товар', 'button', 'basket__item-close');
-    const icon = getSvgIcon(
-      'images/sprite.svg#icon-close',
-      'main-menu__icon',
-      24,
-      24
+    const decrease = this.createItemButton(
+      'minus',
+      'Уменьшить количество',
+      () => this.basketService.decreaseQuantity(product.id)
     );
-    removeBtn.appendChild(icon);
+    decrease.disabled = product.quantity === 1;
+    const increase = this.createItemButton('plus', 'Увеличить количество', () =>
+      this.basketService.addItem(product)
+    );
+    increase.disabled = product.quantity === Number.MAX_SAFE_INTEGER;
+    const quantity = getSpanEl(product.quantity, 'basket__quantity');
+    quantity.setAttribute('aria-live', 'polite');
+    controls.append(decrease, quantity, increase);
 
-    itemElement.append(imgWrapper, nameEl, priceEl, quantityEl, removeBtn);
-
-    // Обработчик для удаления товара при клике на кнопку
-    removeBtn.addEventListener('click', () => {
-      this.removeItem(product.id);
-    });
+    const remove = this.createItemButton(
+      'close',
+      `Удалить товар: ${product.name}`,
+      () => this.basketService.removeItem(product.id)
+    );
+    itemElement.append(imgWrapper, nameEl, priceEl, controls, remove);
 
     return itemElement;
   }
 
-  // Создание элемента корзины для каждого товара на странице оформления заказа
-  renderCheckoutProducts(containerSelector) {
-    const container = document.querySelector(containerSelector);
+  createItemButton(icon, label, action) {
+    const button = getBtnEl(
+      label,
+      'button',
+      `basket__action basket__action--${icon}`
+    );
+    button.dataset.action = icon;
+    button.append(getSvgIcon(`images/sprite.svg#icon-${icon}`, '', 18, 18));
+    button.addEventListener('click', () => {
+      action();
+      this.updateAll();
+    });
+    return button;
+  }
 
+  renderList(container) {
     if (!container) return;
 
-    container.innerHTML = '';
+    const focused = container.contains(document.activeElement)
+      ? document.activeElement
+      : null;
+    const row = focused?.closest('.basket__item');
+    const rowIndex = row ? Array.from(container.children).indexOf(row) : -1;
+    const items = this.getItems().map((product) =>
+      this.createBasketItem(product)
+    );
 
-    this.getItems().forEach((product) => {
-      container.append(this.createBasketItem(product));
-    });
+    container.replaceChildren(...items);
+    if (!row) return;
+
+    const nextRow =
+      items.find((item) => item.dataset.id === row.dataset.id) ??
+      items[Math.min(rowIndex, items.length - 1)];
+    const nextControl =
+      nextRow?.querySelector(
+        `[data-action="${focused.dataset.action}"]:enabled`
+      ) ??
+      nextRow?.querySelector('button:enabled') ??
+      this.basketButton;
+    nextControl?.focus({ preventScroll: true });
   }
 
   // счётчика суммы товаров в корзине
@@ -150,7 +181,7 @@ export default class Basket {
     const hasItems = this.getItems().length > 0;
 
     if (checkoutList) {
-      this.renderCheckoutProducts('.basket--checkout .basket__list');
+      this.renderList(checkoutList);
     }
 
     this.renderCheckoutTotal('.checkout__total-price');
@@ -186,18 +217,15 @@ export default class Basket {
     this.updateAll();
   }
 
-  // Обновление отображения корзины
-  updateBasketDisplay() {
-    this.basketList.innerHTML = '';
-    this.getItems().forEach((product) => {
-      this.basketList.appendChild(this.createBasketItem(product)); // Добавляем товары в список
-    });
-  }
-
   // Обновление счётчика количества товаров в корзине
   updateBasketCounter() {
     if (this.basketCounter) {
-      this.basketCounter.textContent = this.basketService.getTotalQuantity();
+      const quantity = this.basketService.getTotalQuantity();
+      this.basketCounter.textContent = quantity;
+      this.basketButton?.setAttribute(
+        'aria-label',
+        `Корзина, товаров: ${quantity}`
+      );
     }
   }
 
@@ -219,7 +247,7 @@ export default class Basket {
   }
 
   updateAll() {
-    this.updateBasketDisplay();
+    this.renderList(this.basketList);
     this.updateUI();
     this.renderCheckoutState();
   }

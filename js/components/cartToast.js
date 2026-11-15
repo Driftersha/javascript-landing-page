@@ -1,3 +1,5 @@
+import { getSvgIcon } from './domHelpers.js';
+
 let timeoutId;
 
 export function announceCartAddition(product, quantity) {
@@ -18,7 +20,8 @@ export function announceCartAddition(product, quantity) {
   details.textContent = product.name + ' · ' + quantity + ' шт. в корзине';
   const link = document.createElement('a');
   link.href = './checkout.html';
-  link.textContent = 'Посмотреть корзину →';
+  link.textContent = 'Посмотреть корзину';
+  link.append(getSvgIcon('images/sprite.svg#icon-arrow-diagonal', '', 16, 16));
   toast.append(title, details, link);
   toast.classList.add('cart-toast--visible');
   window.clearTimeout(timeoutId);

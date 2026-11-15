@@ -1,220 +1,168 @@
 .basket {
-  background-color: $color-white;
+  width: min(420px, calc(100vw - 32px));
+  max-height: calc(100vh - 84px);
+  max-height: calc(100dvh - 84px - env(safe-area-inset-top));
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 12px;
+  border: 1px solid $color-solitude;
   border-radius: 8px;
-  padding: 16px;
+  background-color: $color-white;
+  box-shadow: 0 10px 40px #48484833;
   position: absolute;
   right: 0;
-  top: calc(100% + 18px);
-  box-shadow: 0 10px 60px 0 #4848481a;
+  top: calc(100% + 12px);
+  z-index: 10;
+  visibility: hidden;
   opacity: 0;
-  transform: translateY(-20px);
-  pointer-events: none;
+  transform: translateY(-8px);
   transition:
     opacity $transition,
-    transform $transition;
-  z-index: 10;
-  max-width: calc(100vw - 32px);
+    transform $transition,
+    visibility $transition;
 
   &--active {
+    visibility: visible;
     opacity: 1;
-    transform: translateY(0);
-    pointer-events: all;
+    transform: none;
+  }
+
+  &--checkout {
+    position: static;
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
   }
 
   &__empty-block {
+    padding: 8px 0;
     text-align: center;
-    font-size: 14px;
     font-weight: 600;
-    line-height: 25.2px;
-    min-width: 300px;
-    width: 100%;
+    line-height: 1.5;
   }
 
   &__list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    display: grid;
+    gap: 12px;
     list-style: none;
-    margin: 0 0 16px;
+    margin: 0 0 12px;
     padding: 0;
+
+    &:empty {
+      margin: 0;
+    }
   }
 
   &__item {
     display: grid;
-    gap: 20px;
-    grid-template-columns: 60px 170px 76px 20px;
+    grid-template-areas:
+      'image name remove'
+      'image controls price';
+    grid-template-columns: 52px minmax(0, 1fr) minmax(44px, 30%);
     align-items: center;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 16.8px;
-    position: relative;
-    min-width: 0;
-  }
-
-  &--checkout {
-    opacity: 1;
-    position: static;
-    pointer-events: all;
-    box-shadow: none;
-
-    .basket__list {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  &__item-close {
-    padding: 0;
-    width: 20px;
-    height: 20px;
-    background-color: transparent;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &__name {
-    min-width: 0;
-    overflow-wrap: anywhere;
-  }
-
-  &__price {
-    justify-self: end;
-    white-space: nowrap;
+    gap: 6px 10px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid $color-solitude;
   }
 
   &__img {
-    align-items: flex-start;
-    background-color: $color-white-smoke;
-    border-radius: 6px;
-    display: flex;
-    height: 60px;
-    justify-content: center;
-    width: 60px;
+    grid-area: image;
+    align-self: start;
     overflow: hidden;
+    width: 52px;
+    aspect-ratio: 4 / 5;
+    border-radius: 6px;
+  }
 
-    @media (max-width: 378px) {
-      height: auto;
-      width: auto;
-    }
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-    img {
-      height: 60px;
-      object-fit: contain;
-      width: 60px;
+  &__name {
+    grid-area: name;
+    overflow-wrap: anywhere;
+    font-weight: 600;
+    line-height: 1.35;
+  }
 
-      @media (max-width: 378px) {
-        height: auto;
-        width: auto;
-      }
-    }
+  &__price {
+    grid-area: price;
+    justify-self: end;
+    overflow-wrap: anywhere;
+    text-align: end;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  &__controls {
+    grid-area: controls;
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid $color-solitude;
+    border-radius: 6px;
   }
 
   &__quantity {
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    background-color: #9be198;
-    position: absolute;
-    z-index: 20;
-    top: -10px;
-    left: 47px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #ffffff;
-    font-size: 12px;
-    font-weight: 200;
+    min-width: 24px;
+    max-width: 45px;
+    overflow-wrap: anywhere;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
   }
 
-  @media (max-width: $vp-tablet) {
-    &--checkout {
-      .basket__list {
-        grid-template-columns: 1fr;
-      }
+  &__action {
+    display: grid;
+    place-items: center;
+    min-width: 36px;
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: #252923;
+
+    &:not(:disabled):hover {
+      background-color: $color-white-smoke;
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.35;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #405541;
+      outline-offset: -2px;
     }
   }
 
-  @media (max-width: $vp-mobile) {
-    // left: 50%;
-    // right: auto;
-    // transform: translate(-50%, -20px);
-    width: calc(100vw - 32px);
-
-    &--active {
-      // transform: translate(-50%, 0);
-    }
-
-    &__empty-block {
-      min-width: 0;
-    }
-
-    &__item {
-      gap: 12px;
-      grid-template-columns: 60px minmax(0, 1fr) 73px 20px;
-    }
-
-    &--checkout {
-      width: 100%;
-      transform: none;
-    }
+  &__action--close {
+    grid-area: remove;
+    justify-self: end;
+    min-width: 44px;
   }
 
   @media (max-width: 479px) {
-    padding: 12px;
-
-    &--checkout {
-      padding: 0;
-    }
-
-    &__list {
-      gap: 12px;
-    }
-
     &__item {
-      gap: 10px;
-      grid-template-columns: 52px minmax(0, 1fr) 62px 20px;
+      grid-template-columns: 44px minmax(0, 1fr) minmax(44px, 30%);
+      gap: 4px 6px;
+    }
+
+    &__img {
+      width: 44px;
+    }
+
+    &__name {
       font-size: 12px;
-      line-height: 15.6px;
-    }
-
-    &__img {
-      height: 52px;
-      width: 52px;
-
-      img {
-        height: 52px;
-        width: 52px;
-      }
-    }
-
-    &__quantity {
-      left: 40px;
-    }
-  }
-
-  @media (max-width: 367px) {
-    &__item {
-      grid-template-columns: 48px minmax(0, 1fr) 56px 18px;
-      gap: 8px;
-    }
-
-    &__img {
-      height: 48px;
-      width: 48px;
-
-      img {
-        height: 48px;
-        width: 48px;
-      }
-    }
-
-    &__quantity {
-      height: 18px;
-      left: 36px;
-      width: 18px;
-      font-size: 10px;
     }
   }
 }

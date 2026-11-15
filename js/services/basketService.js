@@ -1,57 +1,68 @@
-import {
-  clearBasketItems,
-  getBasketItems,
-  setBasketItems,
-} from './basketStorage.js';
+import { createBasketStorage } from './basketStorage.js';
 
-export function createBasketService() {
+export function createBasketService(products, storage = createBasketStorage()) {
+  const productsById = new Map(
+    products.map((product) => [product.id, product])
+  );
+
+  function getEntries() {
+    return storage.read().filter((entry) => productsById.has(entry.id));
+  }
+
   return {
     getItems() {
-      return getBasketItems();
+      return getEntries().map(({ id, quantity }) => ({
+        ...productsById.get(id),
+        quantity,
+      }));
     },
 
     addItem(product) {
-      const items = getBasketItems();
-      const existingItem = items.find((item) => item.id === product.id);
+      const { id } = product;
+      if (!productsById.has(id)) return false;
 
-      if (existingItem) {
-        existingItem.quantity += 1;
+      const entries = getEntries();
+      const existing = entries.find((entry) => entry.id === id);
+      if (existing?.quantity === Number.MAX_SAFE_INTEGER) return false;
+      if (existing) {
+        existing.quantity += 1;
       } else {
-        items.push({ ...product, quantity: 1 });
+        entries.push({ id, quantity: 1 });
       }
 
-      setBasketItems(items);
+      storage.write(entries);
+      return true;
+    },
+
+    decreaseQuantity(productId) {
+      const entries = getEntries();
+      const index = entries.findIndex((entry) => entry.id === productId);
+      if (index === -1 || entries[index].quantity === 1) return;
+
+      entries[index].quantity -= 1;
+      storage.write(entries);
     },
 
     removeItem(productId) {
-      const items = getBasketItems();
-      const index = items.findIndex((item) => item.id === productId);
-
-      if (index === -1) return;
-
-      if (items[index].quantity > 1) {
-        items[index].quantity -= 1;
-      } else {
-        items.splice(index, 1);
-      }
-
-      setBasketItems(items);
+      const entries = getEntries();
+      const nextEntries = entries.filter((entry) => entry.id !== productId);
+      if (nextEntries.length !== entries.length) storage.write(nextEntries);
     },
 
     clear() {
-      clearBasketItems();
+      storage.write([]);
     },
 
     getTotalPrice() {
-      return getBasketItems().reduce((sum, product) => {
-        return sum + product.price.new * product.quantity;
-      }, 0);
+      return getEntries().reduce(
+        (sum, { id, quantity }) =>
+          sum + productsById.get(id).price.new * quantity,
+        0
+      );
     },
 
     getTotalQuantity() {
-      return getBasketItems().reduce((sum, item) => {
-        return sum + item.quantity;
-      }, 0);
+      return getEntries().reduce((sum, { quantity }) => sum + quantity, 0);
     },
   };
 }
